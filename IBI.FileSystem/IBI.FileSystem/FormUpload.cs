@@ -472,7 +472,7 @@ namespace IBI.FileSystem
 
             int posCode = GetPostionFirstCharacter(filename);
             string filenameDate = filename.Substring(0, posCode);
-            string filenameNotDate = filename.Substring(posCode + 1);
+            string filenameNotDate = filename.Substring(posCode );
 
             string filenameDateTemp = filenameDate.Replace("-", "").Replace("_", "").Replace(" ","").Trim(); 
             
