@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using IBI.FileSystem.Helpers;
+using System.Diagnostics;
+using System.Reflection;
 
 namespace IBI.FileSystem
 {
@@ -36,7 +38,7 @@ namespace IBI.FileSystem
                 checkBoxRemember.Checked = true;
             }
 
-
+            
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
