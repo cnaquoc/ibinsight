@@ -98,6 +98,7 @@ namespace IBI.FileSystem
                 ListViewItem lvi = new ListViewItem(filename, index);
                  
                 lvi.SubItems.Add(extension);                
+                lvi.SubItems.Add(item.Reason);
                 lvi.SubItems.Add(classifyname);
                 lvi.SubItems.Add(item.FileName);
                 lvi.SubItems.Add(item.IsStandard.ToString());
@@ -110,6 +111,7 @@ namespace IBI.FileSystem
             // Width of -2 indicates auto-size.
             listView1.Columns.Add("File name",  450 , HorizontalAlignment.Left);
             listView1.Columns.Add("Type", -2, HorizontalAlignment.Left);
+            listView1.Columns.Add("Reason", -2, HorizontalAlignment.Left);
             listView1.Columns.Add("Classify", -2, HorizontalAlignment.Left);
 
             //Assign the ImageList objects to the ListView.

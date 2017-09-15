@@ -48,3 +48,4 @@ D:\GitHub\IBI.FileSystem\IBI.FileSystem\obj\Release\IBI.FileSystem.csproj.Genera
 D:\GitHub\IBI.FileSystem\IBI.FileSystem\obj\Release\IBI.FileSystem.csproj.CoreCompileInputs.cache
 D:\GitHub\IBI.FileSystem\IBI.FileSystem\obj\Release\IBI.FileSystem.exe
 D:\GitHub\IBI.FileSystem\IBI.FileSystem\obj\Release\IBI.FileSystem.pdb
+D:\GitHub\IBI.FileSystem\IBI.FileSystem\obj\Release\IBI.FileSystem.csprojResolveAssemblyReference.cache

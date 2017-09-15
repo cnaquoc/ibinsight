@@ -195,9 +195,9 @@ namespace IBI.FileSystem
                         classify.Keyword = txtKeyword.Text;
                         db.SubmitChanges();
 
-                        parentNode = null;
-                        LoadTreeView();
-                        
+                        //parentNode = null;
+                        //LoadTreeView();
+                        treeView.Focus();
                         MessageBox.Show("Update data successful!");
                     }
                 }
@@ -356,6 +356,7 @@ namespace IBI.FileSystem
             isAddNew = false;
             btnSave.Visible = true;
             lblStatus.Text = "Status: Edit [Click classify tree on left hand side to edit]";
+            treeView.Focus();
         }
     }
 }

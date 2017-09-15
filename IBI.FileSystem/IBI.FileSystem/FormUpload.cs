@@ -19,24 +19,19 @@ namespace IBI.FileSystem
         private DataClasses_LocalDataContext db = null;
         TreeNode parentNode = null;
 
-        string remoteServer = ""; //Helpers.RemoteServer.GetConfigValue("RemoteServer");
-        string remoteServerPath = ""; //Helpers.RemoteServer.GetConfigValue("RemoteServerPath");
-
-        //private bool IsAuto = false;
-        //private DateTime dateFrom = new DateTime();
-        //private DateTime dateTo = new DateTime();
+        
 
         public FormUpload()
         {
             InitializeComponent();
-            db = DB_Singleton.GetDatabase();
+            db = DB_Singleton.GetDatabase();            
             
-            //dtpDate.Format = DateTimePickerFormat.Custom;
             LoadTreeView();
             lblMessage.Text = "";
             txtClassifyId.Text = "";
             txtCompanyId.Text = "";
             lblSelectedMessage.Text = "";
+            
             
         }
 
@@ -57,7 +52,8 @@ namespace IBI.FileSystem
 
                 string nodeName = code + classify.Name;
                 parentNode = treeViewClassify.Nodes.Add(nodeName);
-                parentNode.Name = classify.Id.ToString();                
+                parentNode.Name = classify.Id.ToString();
+                //parentNode.Tag = classify.Code;
                 PopulateTreeView(classify.Id, parentNode);
             }
 
@@ -83,6 +79,7 @@ namespace IBI.FileSystem
                     childNode = parentNode.Nodes.Add(nodeName);
 
                 childNode.Name = child.Id.ToString();
+                //childNode.Tag = child.Code;
 
                 PopulateTreeView(child.Id, childNode);
             }
@@ -446,50 +443,100 @@ namespace IBI.FileSystem
             result.FileNameOnly = filenameOnly;
 
             bool isStandard = false;
-
-            isStandard = ValidateInput(filenameOnly, result);            
+            string reason = "";
+            isStandard = ParseDetail(filenameOnly, result, ref reason);            
             if (!isStandard)
             {
-                result.IsStandard = isStandard;                
+                result.IsStandard = isStandard;
+                result.Reason = reason;
             }
 
             return result;
         }
 
 
-        private bool ValidateInput(string filename, ClassFile classFile)
+        private bool ParseDetail(string filename, ClassFile classFile, ref string reason)
         {
             bool isStandard = true;
 
-            //leng<8 + 1 + 8 + 1 + 1 +1 + 1 + 4 =25
+            //leng<8 + 1 + 1 + 1 + 1 + 4 =16
             bool isDateTime = true;
-            if (filename.Length < 25) return false;
+            if (filename.Trim().Length < 8)
+            {
+                reason = "Invalid date"; ;  //not show 4 .pdf
+                return false;
+            }
 
-            string to = filename.Substring(0,8);
-            string from = filename.Substring(9, 8);            
-                        
+            //get string date
+            //get string code
+
+            int posCode = GetPostionFirstCharacter(filename);
+            string filenameDate = filename.Substring(0, posCode);
+            string filenameNotDate = filename.Substring(posCode + 1);
+
+            string filenameDateTemp = filenameDate.Replace("-", "").Replace("_", "").Replace(" ","").Trim(); 
+            
+            if (!(filenameDateTemp.Length==8 || filenameDateTemp.Length == 16))
+            {
+                reason = "Invalid date";
+                return false;
+            }
+
+            string to = ""; 
+            string from = ""; 
+            if (filenameDateTemp.Length == 8)
+            {
+                to = filenameDateTemp;
+                from = filenameDateTemp;
+            }
+            else if (filenameDateTemp.Length == 16)
+            {
+                to = filenameDateTemp.Substring(0,8);
+                from = filenameDateTemp.Substring(8);
+            }
+
+
             //Parse date to
             DateTime dateTo = StringToDateTime(to, ref isDateTime);
-            if (!isDateTime) return false;
-
-            //Parse underscore
-            string underscore = filename.Substring(8, 1);
-            if (underscore != "_") return false;
-
+            if (!isDateTime)
+            {
+                reason = "Invalid date";
+                return false;
+            }
+            
             //Parse date from
             DateTime dateFrom = StringToDateTime(from, ref isDateTime);
-            if (!isDateTime) return false;
+            if (!isDateTime)
+            {
+                reason = "Invalid date";
+                return false;
+            }
 
             var compare = DateTime.Compare(dateFrom, dateTo);
-            if (compare > 0) return false;
+            if (compare > 0)
+            {
+                var dateTemp = dateFrom;
+                dateFrom = dateTo;
+                dateTo = dateTemp;
+            }
+
+
+
+            //Keep this code is running correct
+
+            filename = filenameDateTemp + "-" + filenameNotDate;
 
             //Parse first hyphen
             int firstIndexHyphen = filename.IndexOf("-");
-            if (firstIndexHyphen <= 0) isStandard= false;
+            //if (firstIndexHyphen <= 0) isStandard= false;
 
             //Parse second hyphen
             int secondIndexHyphen = filename.Substring(firstIndexHyphen + 1).IndexOf("-");
-            if (secondIndexHyphen <= 0) return false;
+            if (secondIndexHyphen <= 0)
+            {
+                reason = "Invalid ticker";
+                return false;
+            }
 
             int realSecondIndexHyphen = firstIndexHyphen + secondIndexHyphen;
 
@@ -503,32 +550,63 @@ namespace IBI.FileSystem
 
 
             var company = db.Local_Companies.Where(t => t.Ticker == code).FirstOrDefault();
-            if (company==null) return false;
-            //txtCompanyName.Text = company == null ? "" : company.Name;
-            //txtCompanyId.Text = company == null ? "" : company.Id.ToString();
+            if (company==null)
+            {
+                reason = "Not exist ticker";
+                return false;
+            }
 
 
             var classifyList = db.Local_Classifies.ToList();
             var classifyListFound = Utils.FindClassifyFromKeyword(keyword, classifyList);
 
-            if (classifyListFound.Count == 0) isStandard= false;
-
-            //txtSelectedClassify.Text = classify == null ? "" : "[" + classify.Code + "] " + classify.Name;
-            //lblSelectedMessage.Text = txtSelectedClassify.Text;
-            //txtClassifyId.Text = classify == null ? "" : classify.Id.ToString();
-
-            // Assign data to class file
-            //classFile.FileName = filename;
+            if (classifyListFound.Count == 0)
+            {
+                isStandard = false;
+                reason = "Not exist keyword";
+            }
+            
+            // Assign data to class file            
             classFile.Code = code;
             classFile.IsStandard = isStandard;
             classFile.Keyword = keyword;
             classFile.DateFrom = dateFrom;
-            classFile.DateTo = dateTo;
-            //classFile.ClassifyId = classify.Id;
+            classFile.DateTo = dateTo;            
             classFile.CompanyId = company.Id.ToString();
             classFile.ListClassify = classifyListFound;
 
             return isStandard;
+        }
+
+
+        private int GetPostionFirstCharacter(string filename)
+        {
+            int length = filename.Length;
+            for (int i = 0; i < length; i++)
+            {
+                var value = filename[i];
+                if( ( value >= 'A' && value <= 'Z') || (value >= 'a' && value <= 'z'))
+                {
+                    return i;
+                }
+            }
+
+            return 0;
+        }
+
+        private bool CheckIsNumberic()
+        {
+            return true;
+        }
+
+        private bool CheckIsOneDate(string input)
+        {
+            return true;
+        }
+
+        private bool CheckIsTwoDate(string input)
+        {
+            return true;
         }
 
         private DateTime StringToDateTime(string inputDate, ref bool isDateTime)
@@ -565,15 +643,18 @@ namespace IBI.FileSystem
         {
 
             string name = e.Node.Name;
+            
             //string name = treeViewClassify.SelectedNode.Name.ToString();
             //txtSelectedClassify.Text = "";
             //txtClassifyId.Text = "";
             int Id = 0;
             int.TryParse(name, out Id);
 
+            
+
             var classify = db.Local_Classifies.Where(t => t.Id == Id).FirstOrDefault();
             // assign data
-            if (!string.IsNullOrEmpty(classify.Code))
+            if (!string.IsNullOrEmpty(classify.Code) && e.Node.FirstNode == null && e.Node.LastNode == null)
             {
                 string code = "[" + classify.Code + "] ";
                 txtClassifyId.ReadOnly = false;

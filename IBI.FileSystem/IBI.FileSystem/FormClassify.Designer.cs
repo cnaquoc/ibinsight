@@ -42,21 +42,22 @@
             this.lblMessage = new System.Windows.Forms.Label();
             this.btnClear = new System.Windows.Forms.Button();
             this.groupBox = new System.Windows.Forms.GroupBox();
-            this.btnClose = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.btnEdit = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.txtKeyword = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.btnEdit = new System.Windows.Forms.Button();
+            this.btnClose = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.lblStatus = new System.Windows.Forms.Label();
             this.groupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // treeView
             // 
+            this.treeView.Cursor = System.Windows.Forms.Cursors.Hand;
             this.treeView.Location = new System.Drawing.Point(12, 44);
             this.treeView.Name = "treeView";
-            this.treeView.Size = new System.Drawing.Size(292, 393);
+            this.treeView.Size = new System.Drawing.Size(389, 393);
             this.treeView.TabIndex = 1;
             this.treeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterSelect);
             // 
@@ -186,12 +187,49 @@
             this.groupBox.Controls.Add(this.btnAddNew);
             this.groupBox.Controls.Add(this.cbbParrent);
             this.groupBox.Controls.Add(this.lblParent);
-            this.groupBox.Location = new System.Drawing.Point(317, 39);
+            this.groupBox.Location = new System.Drawing.Point(407, 39);
             this.groupBox.Name = "groupBox";
             this.groupBox.Size = new System.Drawing.Size(506, 398);
             this.groupBox.TabIndex = 13;
             this.groupBox.TabStop = false;
             this.groupBox.Text = "Details";
+            // 
+            // btnEdit
+            // 
+            this.btnEdit.Location = new System.Drawing.Point(124, 17);
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.Size = new System.Drawing.Size(84, 34);
+            this.btnEdit.TabIndex = 17;
+            this.btnEdit.Text = "Edit";
+            this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.ForeColor = System.Drawing.Color.OrangeRed;
+            this.label3.Location = new System.Drawing.Point(85, 299);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(239, 13);
+            this.label3.TabIndex = 15;
+            this.label3.Text = "Keyword should be seperate by enter for new line";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(26, 166);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(51, 13);
+            this.label2.TabIndex = 13;
+            this.label2.Text = "Keyword:";
+            // 
+            // txtKeyword
+            // 
+            this.txtKeyword.Location = new System.Drawing.Point(87, 163);
+            this.txtKeyword.Multiline = true;
+            this.txtKeyword.Name = "txtKeyword";
+            this.txtKeyword.Size = new System.Drawing.Size(413, 133);
+            this.txtKeyword.TabIndex = 14;
             // 
             // btnClose
             // 
@@ -216,48 +254,11 @@
             this.label1.TabIndex = 20;
             this.label1.Text = "(Choose classify for edit or delete)";
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(26, 166);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(51, 13);
-            this.label2.TabIndex = 13;
-            this.label2.Text = "Keyword:";
-            // 
-            // txtKeyword
-            // 
-            this.txtKeyword.Location = new System.Drawing.Point(87, 163);
-            this.txtKeyword.Multiline = true;
-            this.txtKeyword.Name = "txtKeyword";
-            this.txtKeyword.Size = new System.Drawing.Size(413, 133);
-            this.txtKeyword.TabIndex = 14;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.ForeColor = System.Drawing.Color.OrangeRed;
-            this.label3.Location = new System.Drawing.Point(85, 299);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(239, 13);
-            this.label3.TabIndex = 15;
-            this.label3.Text = "Keyword should be seperate by enter for new line";
-            // 
-            // btnEdit
-            // 
-            this.btnEdit.Location = new System.Drawing.Point(124, 17);
-            this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(84, 34);
-            this.btnEdit.TabIndex = 17;
-            this.btnEdit.Text = "Edit";
-            this.btnEdit.UseVisualStyleBackColor = true;
-            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
-            // 
             // lblStatus
             // 
             this.lblStatus.AutoSize = true;
             this.lblStatus.ForeColor = System.Drawing.Color.Blue;
-            this.lblStatus.Location = new System.Drawing.Point(347, 13);
+            this.lblStatus.Location = new System.Drawing.Point(437, 13);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(40, 13);
             this.lblStatus.TabIndex = 21;
@@ -267,7 +268,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(835, 449);
+            this.ClientSize = new System.Drawing.Size(924, 449);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBox);

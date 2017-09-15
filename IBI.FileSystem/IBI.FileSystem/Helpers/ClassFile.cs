@@ -19,6 +19,7 @@ namespace IBI.FileSystem.Helpers
         public string Id { get; set; }
         public string CompanyId { get; set; }
         public string FileGUID { get; set; }
+        public string Reason { get; set; }
         public List<Local_Classify> ListClassify { get; set;}
     }
 }

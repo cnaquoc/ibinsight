@@ -43,7 +43,7 @@ namespace IBI.FileSystem.Helpers
                     var keywordArray = classify.Keyword.Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
                     foreach (var subkey in keywordArray)
                     {
-                        if (keyword.Contains(subkey.Replace(@"\r", "").Trim()))
+                        if (keyword.Trim().ToLower().Contains(subkey.ToLower().Replace(@"\r", "").Trim()))
                         {
                             result.Add(classify);
                         }
