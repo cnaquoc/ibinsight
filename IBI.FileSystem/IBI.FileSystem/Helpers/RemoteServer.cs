@@ -53,17 +53,17 @@ namespace IBI.FileSystem.Helpers
         }
 
 
-        public static string GetConfigValue(string key)
-        {
-            try
-            {
-                string result = ConfigurationSettings.AppSettings[key].ToString();
-                return result;
-            }
-            catch (Exception)
-            {
-            }
-            return "";
-        }
+        //public static string GetConfigValue(string key)
+        //{
+        //    try
+        //    {
+        //        string result = ConfigurationSettings.AppSettings[key].ToString();
+        //        return result;
+        //    }
+        //    catch (Exception)
+        //    {
+        //    }
+        //    return "";
+        //}
     }
 }

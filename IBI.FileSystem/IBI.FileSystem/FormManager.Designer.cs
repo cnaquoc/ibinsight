@@ -30,6 +30,7 @@
         {
             this.treeViewClassify = new System.Windows.Forms.TreeView();
             this.btnClose = new System.Windows.Forms.Button();
+            this.lblTotalAll = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // treeViewClassify
@@ -52,11 +53,22 @@
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
+            // lblTotalAll
+            // 
+            this.lblTotalAll.AutoSize = true;
+            this.lblTotalAll.ForeColor = System.Drawing.Color.Black;
+            this.lblTotalAll.Location = new System.Drawing.Point(14, 24);
+            this.lblTotalAll.Name = "lblTotalAll";
+            this.lblTotalAll.Size = new System.Drawing.Size(52, 13);
+            this.lblTotalAll.TabIndex = 16;
+            this.lblTotalAll.Text = "lblTotalAll";
+            // 
             // FormManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(711, 534);
+            this.Controls.Add(this.lblTotalAll);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.treeViewClassify);
             this.Name = "FormManager";
@@ -64,6 +76,7 @@
             this.Text = "FormManager";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -71,5 +84,6 @@
 
         private System.Windows.Forms.TreeView treeViewClassify;
         private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.Label lblTotalAll;
     }
 }

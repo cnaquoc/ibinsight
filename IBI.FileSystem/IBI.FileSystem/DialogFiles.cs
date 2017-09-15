@@ -27,12 +27,16 @@ namespace IBI.FileSystem
         {
             InitializeComponent();
             db = DB_Singleton.GetDatabase();
+            lblStandard.Text = "";
+            lblNotStandard.Text = "";
+            lblTotal.Text = "";
             _list = list;            
             LoadListview();
 
             richTextBoxSuccess.Visible = false;
             richTextBoxError.Visible = false;
             btnUpload.Visible = true;
+            
         }
 
         
@@ -49,7 +53,14 @@ namespace IBI.FileSystem
 
             var classifyList = db.Local_Classifies.ToList();
 
-            _list = _list.Where(t => !newList.Contains(t.FileName)).OrderBy(t=>t.IsStandard).ToList();
+            _list = _list.Where(t => !newList.Contains(t.FileNameOnly)).OrderBy(t=>t.IsStandard).ToList();
+
+
+            int iStandard = _list.Where(t => t.IsStandard == true).Count();
+
+            lblStandard.Text = "Total files in standard: " + iStandard.ToString();
+            lblNotStandard.Text = "Total files not in standard: " + (_list.Count()-iStandard).ToString();
+            lblTotal.Text = "Total files: " + _list.Count().ToString();
 
             //bool isExistAutoUpload = false;
 
@@ -85,7 +96,7 @@ namespace IBI.FileSystem
                 string filename = Path.GetFileNameWithoutExtension(item.FileNameOnly);
                 string extension = Path.GetExtension(item.FileName);
                 ListViewItem lvi = new ListViewItem(filename, index);
-                lvi.SubItems.Add(extension);    
+                 
                 lvi.SubItems.Add(extension);                
                 lvi.SubItems.Add(classifyname);
                 lvi.SubItems.Add(item.FileName);
@@ -111,27 +122,26 @@ namespace IBI.FileSystem
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (listView1.SelectedItems.Count == 0)
-                return;
+            //if (listView1.SelectedItems.Count == 0)
+            //    return;
 
-            ListViewItem item = listView1.SelectedItems[0];
+            //ListViewItem item = listView1.SelectedItems[0];
             
-            //string filename = item.Text;
-            //string extension = item.SubItems[1].Text;
-            _FileName = item.SubItems[3].Text;
+           
+            //_FileName = item.SubItems[3].Text;
 
-            string Standard = item.SubItems[4].Text;
-            if (Standard.ToLower()=="true")
-            {
-                MessageBox.Show("This file should be auto upload!");
-                return;
-            }
+            //string Standard = item.SubItems[4].Text;
+            //if (Standard.ToLower()=="true")
+            //{
+            //    MessageBox.Show("This file should be auto upload!");
+            //    return;
+            //}
 
-            fileInfo = _list.Where(t => t.FileName == _FileName).FirstOrDefault();
+            //fileInfo = _list.Where(t => t.FileName == _FileName).FirstOrDefault();
 
 
             
-            this.Close();
+            //this.Close();
         }
 
         private void btnUpload_Click(object sender, EventArgs e)
@@ -261,10 +271,10 @@ namespace IBI.FileSystem
                 foreach (var classify in classFile.ListClassify)
                 {
                     Local_File local_File = new Local_File();
-                    local_File.FileName = classFile.FileName;
+                    local_File.FileName = Path.GetFileName(classFile.FileName);
                     local_File.Id = Guid.NewGuid();
                     local_File.CompanyId = CompanyId;
-                    local_File.ClassifyId = classFile.ClassifyId;
+                    local_File.ClassifyId = classify.Id;
                     local_File.CreatedDate = currentDate;
                     local_File.UserId = Helpers.UserInfo.Id;
                     local_File.FileGUID = FileGUID;

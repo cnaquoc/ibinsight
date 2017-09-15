@@ -139,6 +139,7 @@
             this.mappingRoleUserGroupToolStripMenuItem.Name = "mappingRoleUserGroupToolStripMenuItem";
             this.mappingRoleUserGroupToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
             this.mappingRoleUserGroupToolStripMenuItem.Text = "Mapping Role - &UserGroup";
+            this.mappingRoleUserGroupToolStripMenuItem.Visible = false;
             this.mappingRoleUserGroupToolStripMenuItem.Click += new System.EventHandler(this.mappingRoleUserGroupToolStripMenuItem_Click);
             // 
             // FormMain

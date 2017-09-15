@@ -86,6 +86,7 @@ namespace IBI.FileSystem
 
                 PopulateTreeView(child.Id, childNode);
             }
+            
         }
 
         private void btnUpload_Click(object sender, EventArgs e)
@@ -224,7 +225,7 @@ namespace IBI.FileSystem
                 foreach (var Id in arrayId)
                 {
                     Local_File local_File = new Local_File();
-                    local_File.FileName = FileName;
+                    local_File.FileName = Path.GetFileName(FileName);
                     local_File.Id = Guid.NewGuid();
                     local_File.CompanyId = new Guid(txtCompanyId.Text);
                     local_File.CreatedDate = dtpDate.Value;

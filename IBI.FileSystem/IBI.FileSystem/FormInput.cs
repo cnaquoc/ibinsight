@@ -155,8 +155,8 @@ namespace IBI.FileSystem
                 string connectionResult = Helpers.RemoteServer.OpenConnection();
                 if (string.IsNullOrEmpty(connectionResult))
                 {
-                    string RemoteServer = Helpers.RemoteServer.GetConfigValue("RemoteServer");
-                    string RemoteServerPath = Helpers.RemoteServer.GetConfigValue("RemoteServerPath");  
+                    string RemoteServer = SettingInfo.RemoteServer;
+                    string RemoteServerPath = SettingInfo.RemoteServerPath;
                     
                     string remoteFullPath = Utils.ConcatPath(RemoteServer, RemoteServerPath);
                     filename = Utils.ConcatPath(remoteFullPath, filename);

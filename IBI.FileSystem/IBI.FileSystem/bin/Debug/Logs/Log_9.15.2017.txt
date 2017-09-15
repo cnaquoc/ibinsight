@@ -1,0 +1,126 @@
+9.15.2017 8:48:37 AM
+**************************
+Error: 
+String was not recognized as a valid DateTime.
+
+**************************
+
+9.15.2017 8:51:53 AM
+**************************
+Error: 
+String was not recognized as a valid DateTime.
+
+**************************
+
+9.15.2017 9:39:14 AM
+**************************
+Error: 
+String was not recognized as a valid DateTime.
+
+**************************
+
+9.15.2017 9:43:26 AM
+**************************
+Error: 
+String was not recognized as a valid DateTime.
+
+**************************
+
+9.15.2017 9:45:35 AM
+**************************
+Error: 
+String was not recognized as a valid DateTime.
+
+**************************
+
+9.15.2017 9:48:29 AM
+**************************
+Error: 
+String was not recognized as a valid DateTime.
+
+**************************
+
+9.15.2017 9:49:20 AM
+**************************
+Error: 
+String was not recognized as a valid DateTime.
+
+**************************
+
+9.15.2017 9:52:06 AM
+**************************
+Error: 
+String was not recognized as a valid DateTime.
+
+**************************
+
+9.15.2017 9:52:27 AM
+**************************
+Error: 
+String was not recognized as a valid DateTime.
+
+**************************
+
+9.15.2017 9:54:02 AM
+**************************
+Error: 
+String was not recognized as a valid DateTime.
+
+**************************
+
+9.15.2017 10:09:35 AM
+**************************
+Error: 
+Method 'Boolean Equals(System.String, System.StringComparison)' has no supported translation to SQL.
+
+**************************
+
+9.15.2017 10:10:16 AM
+**************************
+Error: 
+Method 'Boolean Equals(System.String, System.StringComparison)' has no supported translation to SQL.
+
+**************************
+
+9.15.2017 10:11:33 AM
+**************************
+Error: 
+Method 'Boolean Equals(System.String, System.StringComparison)' has no supported translation to SQL.
+
+**************************
+
+9.15.2017 1:56:15 PM
+**************************
+Error: 
+String was not recognized as a valid DateTime.
+
+**************************
+
+9.15.2017 1:56:47 PM
+**************************
+Error: 
+String was not recognized as a valid DateTime.
+
+**************************
+
+9.15.2017 1:58:07 PM
+**************************
+Error: 
+String was not recognized as a valid DateTime.
+
+**************************
+
+9.15.2017 1:59:14 PM
+**************************
+Error: 
+String was not recognized as a valid DateTime.
+
+**************************
+
+9.15.2017 2:01:29 PM
+**************************
+Error: 
+String was not recognized as a valid DateTime.
+
+**************************
+

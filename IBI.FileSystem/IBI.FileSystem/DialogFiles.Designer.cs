@@ -36,16 +36,19 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.richTextBoxSuccess = new System.Windows.Forms.RichTextBox();
             this.richTextBoxError = new System.Windows.Forms.RichTextBox();
+            this.lblStandard = new System.Windows.Forms.Label();
+            this.lblNotStandard = new System.Windows.Forms.Label();
+            this.lblTotal = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // listView1
             // 
             this.listView1.FullRowSelect = true;
             this.listView1.GridLines = true;
-            this.listView1.Location = new System.Drawing.Point(12, 22);
+            this.listView1.Location = new System.Drawing.Point(12, 49);
             this.listView1.Name = "listView1";
             this.listView1.ShowGroups = false;
-            this.listView1.Size = new System.Drawing.Size(595, 384);
+            this.listView1.Size = new System.Drawing.Size(839, 357);
             this.listView1.TabIndex = 1;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
@@ -60,7 +63,7 @@
             // btnUpload
             // 
             this.btnUpload.Image = global::IBI.FileSystem.Properties.Resources.upload;
-            this.btnUpload.Location = new System.Drawing.Point(523, 424);
+            this.btnUpload.Location = new System.Drawing.Point(767, 424);
             this.btnUpload.Name = "btnUpload";
             this.btnUpload.Size = new System.Drawing.Size(84, 36);
             this.btnUpload.TabIndex = 8;
@@ -73,7 +76,7 @@
             // 
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnClose.Image = global::IBI.FileSystem.Properties.Resources.Close;
-            this.btnClose.Location = new System.Drawing.Point(523, 477);
+            this.btnClose.Location = new System.Drawing.Point(767, 477);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(84, 36);
             this.btnClose.TabIndex = 9;
@@ -87,7 +90,7 @@
             this.richTextBoxSuccess.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
             this.richTextBoxSuccess.Location = new System.Drawing.Point(12, 412);
             this.richTextBoxSuccess.Name = "richTextBoxSuccess";
-            this.richTextBoxSuccess.Size = new System.Drawing.Size(505, 48);
+            this.richTextBoxSuccess.Size = new System.Drawing.Size(749, 48);
             this.richTextBoxSuccess.TabIndex = 10;
             this.richTextBoxSuccess.Text = "";
             // 
@@ -96,15 +99,47 @@
             this.richTextBoxError.ForeColor = System.Drawing.Color.Red;
             this.richTextBoxError.Location = new System.Drawing.Point(12, 466);
             this.richTextBoxError.Name = "richTextBoxError";
-            this.richTextBoxError.Size = new System.Drawing.Size(505, 48);
+            this.richTextBoxError.Size = new System.Drawing.Size(749, 48);
             this.richTextBoxError.TabIndex = 11;
             this.richTextBoxError.Text = "";
+            // 
+            // lblStandard
+            // 
+            this.lblStandard.AutoSize = true;
+            this.lblStandard.ForeColor = System.Drawing.Color.Green;
+            this.lblStandard.Location = new System.Drawing.Point(13, 30);
+            this.lblStandard.Name = "lblStandard";
+            this.lblStandard.Size = new System.Drawing.Size(60, 13);
+            this.lblStandard.TabIndex = 12;
+            this.lblStandard.Text = "lblStandard";
+            // 
+            // lblNotStandard
+            // 
+            this.lblNotStandard.AutoSize = true;
+            this.lblNotStandard.ForeColor = System.Drawing.Color.Red;
+            this.lblNotStandard.Location = new System.Drawing.Point(203, 30);
+            this.lblNotStandard.Name = "lblNotStandard";
+            this.lblNotStandard.Size = new System.Drawing.Size(77, 13);
+            this.lblNotStandard.TabIndex = 13;
+            this.lblNotStandard.Text = "lblNotStandard";
+            // 
+            // lblTotal
+            // 
+            this.lblTotal.AutoSize = true;
+            this.lblTotal.Location = new System.Drawing.Point(429, 30);
+            this.lblTotal.Name = "lblTotal";
+            this.lblTotal.Size = new System.Drawing.Size(41, 13);
+            this.lblTotal.TabIndex = 14;
+            this.lblTotal.Text = "lblTotal";
             // 
             // DialogFiles
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(619, 525);
+            this.ClientSize = new System.Drawing.Size(863, 525);
+            this.Controls.Add(this.lblTotal);
+            this.Controls.Add(this.lblNotStandard);
+            this.Controls.Add(this.lblStandard);
             this.Controls.Add(this.richTextBoxError);
             this.Controls.Add(this.richTextBoxSuccess);
             this.Controls.Add(this.btnClose);
@@ -117,6 +152,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Select file dialog";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -127,5 +163,8 @@
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.RichTextBox richTextBoxSuccess;
         private System.Windows.Forms.RichTextBox richTextBoxError;
+        private System.Windows.Forms.Label lblStandard;
+        private System.Windows.Forms.Label lblNotStandard;
+        private System.Windows.Forms.Label lblTotal;
     }
 }

@@ -17,10 +17,10 @@ namespace IBI.FileSystem
     public partial class FormLogin : Form
     {
         private DataClasses_LocalDataContext db = null;
-        const string ADMINISTRATOR = "ADMINISTRATOR";
-        const string MANAGER = "Manager";
-        const string UPLOADER = "Uploader";
-        const string DATAINPUT = "DataInput";
+        const string ADMINISTRATOR = "administrator";
+        const string MANAGER = "filemanager";
+        const string UPLOADER = "fileuploader";
+        const string DATAINPUT = "fileprocessor";
         public FormLogin()
         {
             InitializeComponent();
@@ -90,13 +90,13 @@ namespace IBI.FileSystem
                     result = 0;
 
                     //Save remember
-                    SaveSetting("username", txtUserName.Text);
-                    SaveSetting("password", txtPassword.Text);
+                    //SaveSetting("username", txtUserName.Text);
+                    //SaveSetting("password", txtPassword.Text);
 
-                    string remember = "false";
-                    if (checkBoxRemember.Checked) remember = "true";
+                    //string remember = "false";
+                    //if (checkBoxRemember.Checked) remember = "true";
 
-                    SaveSetting("remember", remember);
+                    //SaveSetting("remember", remember);
 
 
 
@@ -177,7 +177,9 @@ namespace IBI.FileSystem
             UserInfo.IsAdmin = false;
             bool isAdmin = false;
             var roles = db.Local_AspNetUserRoles.Where(t => t.UserId == user.Id).Select(s=>s.RoleId).ToArray();
-            var roleAdmin = db.Local_AspNetRoles.Where(t => t.NormalizedName == ADMINISTRATOR).FirstOrDefault();
+            var roleList = db.Local_AspNetRoles.ToList();
+
+            var roleAdmin = roleList.Where(t => t.NormalizedName.ToLower() == ADMINISTRATOR).FirstOrDefault();
             if (roleAdmin !=null)
             {
                 if (roles.Contains(roleAdmin.Id))
@@ -190,21 +192,41 @@ namespace IBI.FileSystem
                 UserInfo.IsAdmin = true;                
             }
             else
-            {                
-                //Assign normal user
-                var usergroups = db.Local_UserGroups.ToList();
-                var role_usergroups = db.Local_Role_UserGroups.ToList();
-                var listUserGroups = role_usergroups.Where(t => roles.Contains(t.RoleId)).ToList();
-                foreach (var item in usergroups)
+            {
+                //check is manager
+                UserInfo.IsManager = false;                
+                var roleManager = roleList.Where(t => t.NormalizedName.ToLower()==MANAGER).FirstOrDefault();
+                if (roleManager != null)
                 {
-                    bool ExistGroup = listUserGroups.Where(t => t.UserGroupId == item.Id).Any();
-                    if (ExistGroup)
+                    if (roles.Contains(roleManager.Id))
                     {
-                        if (item.GroupCode == MANAGER) UserInfo.IsManager = true;
-                        else if (item.GroupCode == UPLOADER) UserInfo.IsUploader = true;
-                        else if (item.GroupCode == DATAINPUT) UserInfo.IsDataInput = true;
+                        UserInfo.IsManager = true;
                     }
                 }
+
+                //check is fileuploader
+                UserInfo.IsUploader = false;
+                var roleUploader = roleList.Where(t => t.NormalizedName.ToLower()== UPLOADER).FirstOrDefault();
+                if (roleUploader != null)
+                {
+                    if (roles.Contains(roleUploader.Id))
+                    {
+                        UserInfo.IsUploader = true;
+                    }
+                }
+
+                //check is datainput
+                UserInfo.IsDataInput = false;
+                var roleDataInput = roleList.Where(t => t.NormalizedName.ToLower() ==DATAINPUT).FirstOrDefault();
+                if (roleDataInput != null)
+                {
+                    if (roles.Contains(roleDataInput.Id))
+                    {
+                        UserInfo.IsDataInput = true;
+                    }
+                }
+
+               
             }
                        
 
