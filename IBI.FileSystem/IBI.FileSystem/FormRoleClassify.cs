@@ -51,10 +51,10 @@ namespace IBI.FileSystem
             dataGridViewMapping.Columns[0].Visible = false;
 
             dataGridViewMapping.Columns[1].HeaderText = "Role name";
-            dataGridViewMapping.Columns[1].Width = 300;
+            dataGridViewMapping.Columns[1].Width = 400;
 
             dataGridViewMapping.Columns[2].HeaderText = "Classify name";
-            dataGridViewMapping.Columns[2].Width = 300;
+            dataGridViewMapping.Columns[2].AutoSizeMode =DataGridViewAutoSizeColumnMode.Fill;
 
             //Add Delete button to grid
             DataGridViewButtonColumn btnColDelete = new DataGridViewButtonColumn();

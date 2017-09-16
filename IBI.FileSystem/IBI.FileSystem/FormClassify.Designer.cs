@@ -54,6 +54,8 @@
             // 
             // treeView
             // 
+            this.treeView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.treeView.Cursor = System.Windows.Forms.Cursors.Hand;
             this.treeView.Location = new System.Drawing.Point(12, 44);
             this.treeView.Name = "treeView";
@@ -170,6 +172,9 @@
             // 
             // groupBox
             // 
+            this.groupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox.Controls.Add(this.btnEdit);
             this.groupBox.Controls.Add(this.label3);
             this.groupBox.Controls.Add(this.label2);

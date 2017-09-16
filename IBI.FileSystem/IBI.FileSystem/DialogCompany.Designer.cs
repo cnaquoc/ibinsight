@@ -42,6 +42,7 @@
             this.dataGridView_Company.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView_Company.Location = new System.Drawing.Point(12, 60);
             this.dataGridView_Company.Name = "dataGridView_Company";
+            this.dataGridView_Company.ReadOnly = true;
             this.dataGridView_Company.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView_Company.Size = new System.Drawing.Size(649, 450);
             this.dataGridView_Company.TabIndex = 0;

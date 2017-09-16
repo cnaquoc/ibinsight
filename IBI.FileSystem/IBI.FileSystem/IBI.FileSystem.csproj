@@ -146,6 +146,7 @@
     <Compile Include="FormRoleClassify.Designer.cs">
       <DependentUpon>FormRoleClassify.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ClassFileInput.cs" />
     <Compile Include="Helpers\ClassFile.cs" />
     <Compile Include="Helpers\SettingInfo.cs" />
     <Compile Include="Helpers\PinvokeWindowsNetworking.cs" />

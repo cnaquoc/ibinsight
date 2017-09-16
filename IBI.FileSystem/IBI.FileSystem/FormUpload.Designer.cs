@@ -100,8 +100,9 @@
             // 
             // lblDate
             // 
+            this.lblDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblDate.AutoSize = true;
-            this.lblDate.Location = new System.Drawing.Point(20, 443);
+            this.lblDate.Location = new System.Drawing.Point(20, 448);
             this.lblDate.Name = "lblDate";
             this.lblDate.Size = new System.Drawing.Size(71, 13);
             this.lblDate.TabIndex = 6;
@@ -109,8 +110,9 @@
             // 
             // dtpDate
             // 
+            this.dtpDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.dtpDate.Enabled = false;
-            this.dtpDate.Location = new System.Drawing.Point(126, 444);
+            this.dtpDate.Location = new System.Drawing.Point(126, 449);
             this.dtpDate.Name = "dtpDate";
             this.dtpDate.Size = new System.Drawing.Size(200, 20);
             this.dtpDate.TabIndex = 6;
@@ -136,17 +138,21 @@
             // 
             // treeViewClassify
             // 
+            this.treeViewClassify.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.treeViewClassify.Location = new System.Drawing.Point(126, 120);
             this.treeViewClassify.Name = "treeViewClassify";
-            this.treeViewClassify.Size = new System.Drawing.Size(471, 297);
+            this.treeViewClassify.Size = new System.Drawing.Size(535, 297);
             this.treeViewClassify.TabIndex = 5;
             this.treeViewClassify.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeViewClassify_AfterCheck);
             this.treeViewClassify.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewClassify_AfterSelect);
             // 
             // lblSelectedClassify
             // 
+            this.lblSelectedClassify.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblSelectedClassify.AutoSize = true;
-            this.lblSelectedClassify.Location = new System.Drawing.Point(20, 420);
+            this.lblSelectedClassify.Location = new System.Drawing.Point(20, 425);
             this.lblSelectedClassify.Name = "lblSelectedClassify";
             this.lblSelectedClassify.Size = new System.Drawing.Size(89, 13);
             this.lblSelectedClassify.TabIndex = 13;
@@ -175,9 +181,10 @@
             // 
             // lblMessage
             // 
+            this.lblMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblMessage.AutoSize = true;
             this.lblMessage.ForeColor = System.Drawing.Color.Red;
-            this.lblMessage.Location = new System.Drawing.Point(126, 524);
+            this.lblMessage.Location = new System.Drawing.Point(126, 529);
             this.lblMessage.Name = "lblMessage";
             this.lblMessage.Size = new System.Drawing.Size(50, 13);
             this.lblMessage.TabIndex = 16;
@@ -185,10 +192,11 @@
             // 
             // lblSelectedMessage
             // 
+            this.lblSelectedMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblSelectedMessage.AutoSize = true;
             this.lblSelectedMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSelectedMessage.ForeColor = System.Drawing.Color.Navy;
-            this.lblSelectedMessage.Location = new System.Drawing.Point(126, 420);
+            this.lblSelectedMessage.Location = new System.Drawing.Point(126, 425);
             this.lblSelectedMessage.Name = "lblSelectedMessage";
             this.lblSelectedMessage.Size = new System.Drawing.Size(157, 13);
             this.lblSelectedMessage.TabIndex = 18;
@@ -206,8 +214,9 @@
             // 
             // btnUpload
             // 
+            this.btnUpload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnUpload.Image = global::IBI.FileSystem.Properties.Resources.upload;
-            this.btnUpload.Location = new System.Drawing.Point(126, 545);
+            this.btnUpload.Location = new System.Drawing.Point(126, 554);
             this.btnUpload.Name = "btnUpload";
             this.btnUpload.Size = new System.Drawing.Size(84, 36);
             this.btnUpload.TabIndex = 7;
@@ -218,9 +227,10 @@
             // 
             // btnClose
             // 
+            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnClose.Image = global::IBI.FileSystem.Properties.Resources.Close;
-            this.btnClose.Location = new System.Drawing.Point(234, 545);
+            this.btnClose.Location = new System.Drawing.Point(821, 554);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(84, 36);
             this.btnClose.TabIndex = 8;
@@ -253,15 +263,17 @@
             // 
             // dtpFrom
             // 
-            this.dtpFrom.Location = new System.Drawing.Point(126, 473);
+            this.dtpFrom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.dtpFrom.Location = new System.Drawing.Point(126, 478);
             this.dtpFrom.Name = "dtpFrom";
             this.dtpFrom.Size = new System.Drawing.Size(200, 20);
             this.dtpFrom.TabIndex = 21;
             // 
             // label2
             // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(20, 472);
+            this.label2.Location = new System.Drawing.Point(20, 477);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(57, 13);
             this.label2.TabIndex = 22;
@@ -269,15 +281,17 @@
             // 
             // dtpTo
             // 
-            this.dtpTo.Location = new System.Drawing.Point(126, 501);
+            this.dtpTo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.dtpTo.Location = new System.Drawing.Point(126, 506);
             this.dtpTo.Name = "dtpTo";
             this.dtpTo.Size = new System.Drawing.Size(200, 20);
             this.dtpTo.TabIndex = 23;
             // 
             // label3
             // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(20, 500);
+            this.label3.Location = new System.Drawing.Point(20, 505);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(47, 13);
             this.label3.TabIndex = 24;

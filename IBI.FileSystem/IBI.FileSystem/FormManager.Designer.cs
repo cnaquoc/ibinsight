@@ -35,6 +35,9 @@
             // 
             // treeViewClassify
             // 
+            this.treeViewClassify.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.treeViewClassify.Location = new System.Drawing.Point(12, 42);
             this.treeViewClassify.Name = "treeViewClassify";
             this.treeViewClassify.Size = new System.Drawing.Size(680, 443);
@@ -42,6 +45,7 @@
             // 
             // btnClose
             // 
+            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnClose.Image = global::IBI.FileSystem.Properties.Resources.Close;
             this.btnClose.Location = new System.Drawing.Point(608, 491);

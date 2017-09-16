@@ -15,6 +15,8 @@ namespace IBI.FileSystem
     public partial class FormInput : Form
     {
         private DataClasses_LocalDataContext db = null;
+        private List<ClassFileInput> listMain = new List<ClassFileInput>();
+
         public FormInput()
         {
             InitializeComponent();
@@ -42,14 +44,17 @@ namespace IBI.FileSystem
             var listC = db.Local_Classifies.ToList();
             var listCompany = db.Local_Companies.ToList();
 
-            var listMain = listFile.Select(t => new
+            listMain = listFile.Select(t => new ClassFileInput
             {
-                Id = t.Id,
+                Id = t.Id.ToString(),
                 CompanyName = listCompany.Where(r => r.Id == t.CompanyId).FirstOrDefault().Name,
+                Code = listCompany.Where(r => r.Id == t.CompanyId).FirstOrDefault().Ticker,
                 ClassifyName = listC.Where(c => c.Id == t.ClassifyId).FirstOrDefault().Name,
                 FileName = t.FileName,
                 CreatedDate =t.CreatedDate,
-                FileGUID = t.FileGUID
+                DateFrom = t.DateFrom.Value,
+                DateTo = t.DateTo.Value,
+                FileGUID = t.FileGUID.Value.ToString()
             }).ToList();
                         
             //Bind data to grid
@@ -69,18 +74,28 @@ namespace IBI.FileSystem
             dataGridView.Columns[1].HeaderText = "Company name";
             dataGridView.Columns[1].Width = 250;
 
-            dataGridView.Columns[2].HeaderText = "Classify name";
-            dataGridView.Columns[2].Width = 250;
+            dataGridView.Columns[2].HeaderText = "Ticker";
+            dataGridView.Columns[2].Width = 100;
 
-            dataGridView.Columns[3].HeaderText = "File name";
+            dataGridView.Columns[3].HeaderText = "Classify name";
             dataGridView.Columns[3].Width = 250;
 
-            dataGridView.Columns[4].HeaderText = "Created date";
-            dataGridView.Columns[4].Width = 110;
+            dataGridView.Columns[4].HeaderText = "File name";            
+            dataGridView.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
             dataGridView.Columns[5].HeaderText = "Created date";
             dataGridView.Columns[5].Width = 110;
             dataGridView.Columns[5].Visible = false;
+
+            dataGridView.Columns[6].HeaderText = "Date from";
+            dataGridView.Columns[6].Width = 80;
+
+            dataGridView.Columns[7].HeaderText = "Date to";
+            dataGridView.Columns[7].Width = 80;
+
+            dataGridView.Columns[8].HeaderText = "file GUID";
+            dataGridView.Columns[8].Width = 110;
+            dataGridView.Columns[8].Visible = false;
 
             //Add Done button to grid
             DataGridViewButtonColumn btnColDone = new DataGridViewButtonColumn();
@@ -106,7 +121,7 @@ namespace IBI.FileSystem
             {
                 DoneAction();
             }
-            else if ((e.ColumnIndex == 5 || e.ColumnIndex==1) && e.RowIndex > -1) //click open file 1 (col Open file) 5 (col File name)
+            else if ((e.ColumnIndex==1) && e.RowIndex > -1) //click open file 1 (col Open file) 5 (col File name)
             {
                 DataGridViewRow row = this.dataGridView.CurrentRow;
                 string Id = row.Cells["Id"].Value.ToString();
@@ -182,6 +197,22 @@ namespace IBI.FileSystem
                 MessageBox.Show("Can not open file!");
             }
             
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            //LoadGrid();
+            var list = listMain.Where(t => t.Code.ToLower().Contains(txtSearchTicker.Text.Trim().ToLower())).ToList();
+            dataGridView.DataSource = list;
+        }
+
+        private void btnSearchAll_Click(object sender, EventArgs e)
+        {
+            var list = listMain.Where(t => t.Code.ToLower().Contains(txtSearchTicker.Text.Trim().ToLower()) && 
+                                           t.DateFrom >= dtpFrom.Value.Date && 
+                                           t.DateTo <= dtpTo.Value.Date 
+                                           ).ToList();
+            dataGridView.DataSource = list;
         }
     }
 }

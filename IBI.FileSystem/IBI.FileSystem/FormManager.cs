@@ -53,6 +53,9 @@ namespace IBI.FileSystem
 
         public void LoadTreeView()
         {
+
+
+            treeViewClassify.Nodes.Clear();
             var allClassifies = db.Local_Classifies.ToList();
 
             

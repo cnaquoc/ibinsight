@@ -39,6 +39,7 @@ namespace IBI.FileSystem
 
         private void LoadTreeView()
         {
+            treeViewClassify.Nodes.Clear();
             var classifies = db.Local_Classifies.Where(t=>(t.ParentId??0)==0).ToList();
 
             foreach (var classify in classifies)

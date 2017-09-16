@@ -95,9 +95,10 @@ namespace IBI.FileSystem
 
                 string filename = Path.GetFileNameWithoutExtension(item.FileNameOnly);
                 string extension = Path.GetExtension(item.FileName);
-                ListViewItem lvi = new ListViewItem(filename, index);
-                 
-                lvi.SubItems.Add(extension);                
+                ListViewItem lvi = new ListViewItem(item.IsStandard.ToString(), index);
+                lvi.SubItems.Add(filename);
+                lvi.SubItems.Add(extension);
+                               
                 lvi.SubItems.Add(item.Reason);
                 lvi.SubItems.Add(classifyname);
                 lvi.SubItems.Add(item.FileName);
@@ -105,10 +106,11 @@ namespace IBI.FileSystem
                 listView1.Items.Add(lvi);              
 
                 
-            }                       
+            }
 
             // Create columns for the items and subitems.
             // Width of -2 indicates auto-size.
+            listView1.Columns.Add("", 22, HorizontalAlignment.Left);
             listView1.Columns.Add("File name",  450 , HorizontalAlignment.Left);
             listView1.Columns.Add("Type", -2, HorizontalAlignment.Left);
             listView1.Columns.Add("Reason", -2, HorizontalAlignment.Left);
@@ -119,6 +121,9 @@ namespace IBI.FileSystem
             listView1.SmallImageList = imageList1;
 
             
+
+
+
 
         }
 
@@ -305,6 +310,12 @@ namespace IBI.FileSystem
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void listView1_ColumnWidthChanging(object sender, ColumnWidthChangingEventArgs e)
+        {
+            e.Cancel = true;
+            e.NewWidth = listView1.Columns[e.ColumnIndex].Width;
         }
     }
 
