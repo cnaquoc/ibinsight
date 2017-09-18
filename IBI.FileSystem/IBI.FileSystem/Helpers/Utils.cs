@@ -45,7 +45,10 @@ namespace IBI.FileSystem.Helpers
                     {
                         if (keyword.Trim().ToLower().Contains(subkey.ToLower().Replace(@"\r", "").Trim()))
                         {
-                            result.Add(classify);
+                            if (!result.Exists(t => t.Id == classify.Id))
+                            {
+                                result.Add(classify);
+                            }
                         }
                     }
                 }
