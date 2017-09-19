@@ -81,6 +81,7 @@
             // 
             // btnSave
             // 
+            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnSave.Location = new System.Drawing.Point(417, 352);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(84, 36);
@@ -110,7 +111,7 @@
             this.cbbParrent.FormattingEnabled = true;
             this.cbbParrent.Location = new System.Drawing.Point(88, 134);
             this.cbbParrent.Name = "cbbParrent";
-            this.cbbParrent.Size = new System.Drawing.Size(247, 21);
+            this.cbbParrent.Size = new System.Drawing.Size(410, 21);
             this.cbbParrent.TabIndex = 6;
             // 
             // lblParent
@@ -152,6 +153,7 @@
             // 
             // lblMessage
             // 
+            this.lblMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblMessage.AutoSize = true;
             this.lblMessage.ForeColor = System.Drawing.Color.Red;
             this.lblMessage.Location = new System.Drawing.Point(85, 324);
@@ -162,6 +164,7 @@
             // 
             // btnClear
             // 
+            this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnClear.Location = new System.Drawing.Point(124, 352);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(84, 36);
@@ -211,6 +214,7 @@
             // 
             // label3
             // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label3.AutoSize = true;
             this.label3.ForeColor = System.Drawing.Color.OrangeRed;
             this.label3.Location = new System.Drawing.Point(85, 299);
@@ -230,6 +234,9 @@
             // 
             // txtKeyword
             // 
+            this.txtKeyword.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtKeyword.Location = new System.Drawing.Point(87, 163);
             this.txtKeyword.Multiline = true;
             this.txtKeyword.Name = "txtKeyword";
@@ -238,6 +245,7 @@
             // 
             // btnClose
             // 
+            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnClose.Image = global::IBI.FileSystem.Properties.Resources.Close;
             this.btnClose.Location = new System.Drawing.Point(33, 352);

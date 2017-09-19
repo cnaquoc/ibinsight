@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DialogFiles));
-            this.listView1 = new System.Windows.Forms.ListView();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.btnUpload = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
@@ -39,20 +38,9 @@
             this.lblStandard = new System.Windows.Forms.Label();
             this.lblNotStandard = new System.Windows.Forms.Label();
             this.lblTotal = new System.Windows.Forms.Label();
+            this.dataGridView = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
-            // 
-            // listView1
-            // 
-            this.listView1.FullRowSelect = true;
-            this.listView1.GridLines = true;
-            this.listView1.Location = new System.Drawing.Point(12, 49);
-            this.listView1.Name = "listView1";
-            this.listView1.ShowGroups = false;
-            this.listView1.Size = new System.Drawing.Size(839, 357);
-            this.listView1.TabIndex = 1;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.listView1_ColumnWidthChanging);
-            this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
             // 
             // imageList1
             // 
@@ -63,6 +51,7 @@
             // 
             // btnUpload
             // 
+            this.btnUpload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnUpload.Image = global::IBI.FileSystem.Properties.Resources.upload;
             this.btnUpload.Location = new System.Drawing.Point(767, 424);
             this.btnUpload.Name = "btnUpload";
@@ -75,6 +64,7 @@
             // 
             // btnClose
             // 
+            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnClose.Image = global::IBI.FileSystem.Properties.Resources.Close;
             this.btnClose.Location = new System.Drawing.Point(767, 477);
@@ -88,6 +78,8 @@
             // 
             // richTextBoxSuccess
             // 
+            this.richTextBoxSuccess.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.richTextBoxSuccess.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
             this.richTextBoxSuccess.Location = new System.Drawing.Point(12, 412);
             this.richTextBoxSuccess.Name = "richTextBoxSuccess";
@@ -97,6 +89,8 @@
             // 
             // richTextBoxError
             // 
+            this.richTextBoxError.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.richTextBoxError.ForeColor = System.Drawing.Color.Red;
             this.richTextBoxError.Location = new System.Drawing.Point(12, 466);
             this.richTextBoxError.Name = "richTextBoxError";
@@ -133,11 +127,26 @@
             this.lblTotal.TabIndex = 14;
             this.lblTotal.Text = "lblTotal";
             // 
+            // dataGridView
+            // 
+            this.dataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridView.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView.Location = new System.Drawing.Point(12, 56);
+            this.dataGridView.Name = "dataGridView";
+            this.dataGridView.Size = new System.Drawing.Size(839, 350);
+            this.dataGridView.TabIndex = 15;
+            this.dataGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView_CellFormatting);
+            this.dataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellValueChanged);
+            // 
             // DialogFiles
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(863, 525);
+            this.Controls.Add(this.dataGridView);
             this.Controls.Add(this.lblTotal);
             this.Controls.Add(this.lblNotStandard);
             this.Controls.Add(this.lblStandard);
@@ -145,20 +154,20 @@
             this.Controls.Add(this.richTextBoxSuccess);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnUpload);
-            this.Controls.Add(this.listView1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "DialogFiles";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Select file dialog";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.Button btnUpload;
         private System.Windows.Forms.Button btnClose;
@@ -167,5 +176,6 @@
         private System.Windows.Forms.Label lblStandard;
         private System.Windows.Forms.Label lblNotStandard;
         private System.Windows.Forms.Label lblTotal;
+        private System.Windows.Forms.DataGridView dataGridView;
     }
 }

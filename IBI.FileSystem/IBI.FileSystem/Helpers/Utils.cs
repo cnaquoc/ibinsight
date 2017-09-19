@@ -39,17 +39,19 @@ namespace IBI.FileSystem.Helpers
             {
                 if (!string.IsNullOrEmpty(classify.Keyword))
                 {
-                    //var keywordArray = classify.Keyword.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                    var keywordArray = classify.Keyword.Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                    
+                    var keywordArray = classify.Keyword.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
                     foreach (var subkey in keywordArray)
-                    {
-                        if (keyword.Trim().ToLower().Contains(subkey.ToLower().Replace(@"\r", "").Trim()))
+                    {                        
+                        if (keyword.ToLower().Contains(subkey.ToLower()))
                         {
                             if (!result.Exists(t => t.Id == classify.Id))
                             {
                                 result.Add(classify);
                             }
                         }
+                        
+                        
                     }
                 }
 
@@ -66,10 +68,10 @@ namespace IBI.FileSystem.Helpers
             {
                 if (!string.IsNullOrEmpty(classify.Keyword))
                 {                    
-                    var keywordArray = classify.Keyword.Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                    var keywordArray = classify.Keyword.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
                     foreach (var subkey in keywordArray)
                     {
-                        if (keyword.Trim().ToLower() == subkey.Replace(@"\r", "").Trim().ToLower())
+                        if (keyword.ToLower() == subkey.ToLower())
                         {
                             return classify;
                         }
@@ -79,5 +81,7 @@ namespace IBI.FileSystem.Helpers
             }
             return null;
         }
+
+        
     }
 }

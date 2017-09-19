@@ -1,0 +1,12 @@
+D:\GitHub\IBI.Web.API\IBI.Web.API\IBI.Web.API\bin\Debug\netcoreapp1.1\IBI.Web.API.deps.json
+D:\GitHub\IBI.Web.API\IBI.Web.API\IBI.Web.API\bin\Debug\netcoreapp1.1\IBI.Web.API.runtimeconfig.json
+D:\GitHub\IBI.Web.API\IBI.Web.API\IBI.Web.API\bin\Debug\netcoreapp1.1\IBI.Web.API.runtimeconfig.dev.json
+D:\GitHub\IBI.Web.API\IBI.Web.API\IBI.Web.API\obj\Debug\netcoreapp1.1\IBI.Web.API.csproj.CoreCompileInputs.cache
+D:\GitHub\IBI.Web.API\IBI.Web.API\IBI.Web.API\obj\Debug\netcoreapp1.1\IBI.Web.API.AssemblyInfo.cs
+D:\GitHub\IBI.Web.API\IBI.Web.API\IBI.Web.API\bin\Debug\netcoreapp1.1\IBI.Web.API.dll
+D:\GitHub\IBI.Web.API\IBI.Web.API\IBI.Web.API\bin\Debug\netcoreapp1.1\IBI.Web.API.pdb
+D:\GitHub\IBI.Web.API\IBI.Web.API\IBI.Web.API\obj\Debug\netcoreapp1.1\IBI.Web.API.dll
+D:\GitHub\IBI.Web.API\IBI.Web.API\IBI.Web.API\obj\Debug\netcoreapp1.1\IBI.Web.API.pdb
+D:\GitHub\IBI.Web.API\IBI.Web.API\IBI.Web.API\bin\Debug\netcoreapp1.1\IBI.Data.API.dll
+D:\GitHub\IBI.Web.API\IBI.Web.API\IBI.Web.API\bin\Debug\netcoreapp1.1\IBI.Data.API.pdb
+D:\GitHub\IBI.Web.API\IBI.Web.API\IBI.Web.API\obj\Debug\netcoreapp1.1\IBI.Web.API.csprojResolveAssemblyReference.cache

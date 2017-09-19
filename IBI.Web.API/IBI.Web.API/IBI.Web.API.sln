@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.15
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IBI.Web.API", "IBI.Web.API\IBI.Web.API.csproj", "{6015C719-37D9-403B-8403-9675CEE7A370}"
+	ProjectSection(ProjectDependencies) = postProject
+		{37BC9A1D-BF8A-46BA-8C7F-5E9A525B816F} = {37BC9A1D-BF8A-46BA-8C7F-5E9A525B816F}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IBI.Data.API", "IBI.Data.API\IBI.Data.API.csproj", "{37BC9A1D-BF8A-46BA-8C7F-5E9A525B816F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6015C719-37D9-403B-8403-9675CEE7A370}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6015C719-37D9-403B-8403-9675CEE7A370}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6015C719-37D9-403B-8403-9675CEE7A370}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6015C719-37D9-403B-8403-9675CEE7A370}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37BC9A1D-BF8A-46BA-8C7F-5E9A525B816F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37BC9A1D-BF8A-46BA-8C7F-5E9A525B816F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37BC9A1D-BF8A-46BA-8C7F-5E9A525B816F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37BC9A1D-BF8A-46BA-8C7F-5E9A525B816F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DADC9F0C-9B00-43AB-B75C-9FD1B1C524A2}
+	EndGlobalSection
+EndGlobal

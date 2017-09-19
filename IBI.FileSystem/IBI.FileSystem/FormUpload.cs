@@ -456,7 +456,7 @@ namespace IBI.FileSystem
         }
 
 
-        private bool ParseDetail(string filename, ClassFile classFile, ref string reason)
+        public bool ParseDetail(string filename, ClassFile classFile, ref string reason)
         {
             bool isStandard = true;
 
@@ -561,10 +561,13 @@ namespace IBI.FileSystem
             var classifyList = db.Local_Classifies.ToList();
             var classifyListFound = Utils.FindClassifyFromKeyword(keyword, classifyList);
 
+            bool notExistKeyword = false;
+
             if (classifyListFound.Count == 0)
             {
                 isStandard = false;
                 reason = "Not exist keyword";
+                notExistKeyword = true;
             }
             
             // Assign data to class file            
@@ -575,6 +578,7 @@ namespace IBI.FileSystem
             classFile.DateTo = dateTo;            
             classFile.CompanyId = company.Id.ToString();
             classFile.ListClassify = classifyListFound;
+            classFile.NotExistKeyword = notExistKeyword;
 
             return isStandard;
         }

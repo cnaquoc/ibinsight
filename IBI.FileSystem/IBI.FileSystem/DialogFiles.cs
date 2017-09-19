@@ -30,8 +30,10 @@ namespace IBI.FileSystem
             lblStandard.Text = "";
             lblNotStandard.Text = "";
             lblTotal.Text = "";
-            _list = list;            
-            LoadListview();
+            _list = list;          
+            
+            LoadGrid();
+            FormatGrid();            
 
             richTextBoxSuccess.Visible = false;
             richTextBoxError.Visible = false;
@@ -39,93 +41,135 @@ namespace IBI.FileSystem
             
         }
 
-        
-
-        private void LoadListview()
+        public void LoadGrid()
         {
-            listView1.Clear();
+            dataGridView.AutoGenerateColumns = false;
+            dataGridView.RowHeadersVisible = false;
             
-            
-
-            //var arrFileName = _list.Select(t => t.FileName).ToArray();
-
-            var newList = db.Local_Files.Select(t=>t.FileName).ToArray();
-
+            var newList = db.Local_Files.Select(t => t.FileName).ToArray();
             var classifyList = db.Local_Classifies.ToList();
-
-            _list = _list.Where(t => !newList.Contains(t.FileNameOnly)).OrderBy(t=>t.IsStandard).ToList();
+            _list = _list.Where(t => !newList.Contains(Path.GetFileName(t.FileName))).OrderBy(t => t.IsStandard).ToList();
 
 
             int iStandard = _list.Where(t => t.IsStandard == true).Count();
 
             lblStandard.Text = "Total files in standard: " + iStandard.ToString();
-            lblNotStandard.Text = "Total files not in standard: " + (_list.Count()-iStandard).ToString();
+            lblNotStandard.Text = "Total files not in standard: " + (_list.Count() - iStandard).ToString();
             lblTotal.Text = "Total files: " + _list.Count().ToString();
 
-            //bool isExistAutoUpload = false;
-
-            //isExistAutoUpload = _list.Where(t => t.IsStandard == true).Any();
-
-            //btnUpload.Visible = isExistAutoUpload;
-            // Set the view to show details.
-            listView1.View = View.Details;
-            
-            listView1.FullRowSelect = true;
-            
-            listView1.Sorting = SortOrder.Ascending;
-
-            int index = 0;
             foreach (var item in _list)
-            {   
-                string classifyname = "";
-                if (item.ListClassify !=null)
+            {
+                item.ClassifyNames = "";
+                item.CountClassify = "";
+                if (item.ListClassify != null)
                 {
-                    classifyname = string.Join("; ", item.ListClassify.Select(t => t.Name).ToArray());
+                    item.CountClassify =  item.ListClassify.Count.ToString();                   
+
+                    item.ClassifyNames = item.ListClassify==null? "": string.Join("; ", item.ListClassify.Select(t => t.Name).ToArray());
                 }
 
-                if (item.IsStandard)
-                {
-                    index = 0;
-                }
-                else
-                {
-                    index = 1;
-                }
-                
+                if (item.CountClassify == "0") item.CountClassify = "";
 
-                string filename = Path.GetFileNameWithoutExtension(item.FileNameOnly);
-                string extension = Path.GetExtension(item.FileName);
-                ListViewItem lvi = new ListViewItem(item.IsStandard.ToString(), index);
-                lvi.SubItems.Add(filename);
-                lvi.SubItems.Add(extension);
-                               
-                lvi.SubItems.Add(item.Reason);
-                lvi.SubItems.Add(classifyname);
-                lvi.SubItems.Add(item.FileName);
-                lvi.SubItems.Add(item.IsStandard.ToString());
-                listView1.Items.Add(lvi);              
+                item.FileNameOnly = Path.GetFileNameWithoutExtension(item.FileName);
 
+                item.Extension = Path.GetExtension(item.FileName);
                 
             }
 
-            // Create columns for the items and subitems.
-            // Width of -2 indicates auto-size.
-            listView1.Columns.Add("", 22, HorizontalAlignment.Left);
-            listView1.Columns.Add("File name",  450 , HorizontalAlignment.Left);
-            listView1.Columns.Add("Type", -2, HorizontalAlignment.Left);
-            listView1.Columns.Add("Reason", -2, HorizontalAlignment.Left);
-            listView1.Columns.Add("Classify", -2, HorizontalAlignment.Left);
-
-            //Assign the ImageList objects to the ListView.
-            listView1.LargeImageList = imageList1;
-            listView1.SmallImageList = imageList1;
-
-            
-
-
+               
+            //Bind data to grid
+            dataGridView.DataSource = _list;
 
 
         }
+
+        private void FormatGrid()
+        {
+            //Format grid
+
+            
+            dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.None;
+            //dataGridView.BackgroundColor= Color.
+
+            //Add btnImage to grid
+            DataGridViewImageColumn btnColImage = new DataGridViewImageColumn();
+            btnColImage.HeaderText = "";           
+            btnColImage.Name = "Image";
+            btnColImage.Width = 35;
+            btnColImage.Image = imageList1.Images[0];
+            dataGridView.Columns.Add(btnColImage);
+
+            
+
+            DataGridViewTextBoxColumn txtColFileName = new DataGridViewTextBoxColumn();
+            txtColFileName.HeaderText = "File name";            
+            txtColFileName.Name = "txtColFileName";
+            txtColFileName.DefaultCellStyle.WrapMode= DataGridViewTriState.True;
+            txtColFileName.Width = 450;
+            txtColFileName.DataPropertyName = "FileNameOnly";
+            dataGridView.Columns.Add(txtColFileName);
+                       
+
+
+            DataGridViewTextBoxColumn txtColType = new DataGridViewTextBoxColumn();
+            txtColType.HeaderText = "Type";
+            txtColType.Name = "txtColType";
+            txtColType.ReadOnly = true;
+            txtColType.Width = 75;
+            txtColType.DataPropertyName = "Extension";
+            dataGridView.Columns.Add(txtColType);
+
+            DataGridViewTextBoxColumn txtColReason = new DataGridViewTextBoxColumn();
+            txtColReason.HeaderText = "Reason";
+            txtColReason.Name = "txtColReason";
+            txtColReason.ReadOnly = true;
+            txtColReason.Width = 150;
+            txtColReason.DataPropertyName = "Reason";
+            dataGridView.Columns.Add(txtColReason);
+
+            DataGridViewTextBoxColumn txtColCount = new DataGridViewTextBoxColumn();
+            txtColCount.HeaderText = "";
+            txtColCount.Name = "txtColCount";
+            txtColCount.ReadOnly = true;
+            txtColCount.Width = 20;
+            txtColCount.DataPropertyName = "CountClassify";
+            dataGridView.Columns.Add(txtColCount);
+
+            DataGridViewTextBoxColumn txtColClassify = new DataGridViewTextBoxColumn();
+            txtColClassify.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            txtColFileName.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            txtColClassify.HeaderText = "Classify";
+            txtColClassify.Name = "txtColClassify";
+            txtColClassify.ReadOnly = true;
+            txtColClassify.Width = 250;
+            txtColClassify.DataPropertyName = "ClassifyNames";
+            dataGridView.Columns.Add(txtColClassify);
+
+
+            DataGridViewTextBoxColumn txtColStandard = new DataGridViewTextBoxColumn();
+            txtColStandard.HeaderText = "Standard";
+            txtColStandard.Name = "txtColStandard";
+            txtColStandard.Width = 50;
+            txtColStandard.DataPropertyName = "IsStandard";
+            txtColStandard.Visible = false;
+            dataGridView.Columns.Add(txtColStandard);
+
+            DataGridViewTextBoxColumn txtColId = new DataGridViewTextBoxColumn();
+            txtColId.HeaderText = "Id";
+            txtColId.Name = "txtColId";
+            txtColId.Width = 50;
+            txtColId.DataPropertyName = "FileName";
+            txtColId.Visible = false;
+            dataGridView.Columns.Add(txtColId);
+
+
+            dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+
+
+        }
+
+
+        
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -224,6 +268,7 @@ namespace IBI.FileSystem
                         if (resultUploadSuccess != "")
                         {
                             resultUploadSuccess = resultUploadSuccess + " uploaded successfull!";
+                            
                         }
 
                         if (resultUploadErrors != "")
@@ -231,10 +276,10 @@ namespace IBI.FileSystem
                             resultUploadSuccess = resultUploadSuccess + " uploaded failed";
                         }
 
-                        LoadListview();
+                        LoadGrid();
                         richTextBoxSuccess.Text = resultUploadSuccess;
                         richTextBoxError.Text = resultUploadErrors;
-
+                        MessageBox.Show("Upload done!");
 
                     }
                     catch (Exception ex)
@@ -312,10 +357,82 @@ namespace IBI.FileSystem
             this.Close();
         }
 
-        private void listView1_ColumnWidthChanging(object sender, ColumnWidthChangingEventArgs e)
+        
+
+        private void dataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            e.Cancel = true;
-            e.NewWidth = listView1.Columns[e.ColumnIndex].Width;
+            if (dataGridView.Columns[e.ColumnIndex].Name == "Image")
+            {
+                DataGridViewRow currentRow = dataGridView.Rows[e.RowIndex];
+
+                string standard= currentRow.Cells["txtColStandard"].Value.ToString();
+
+                if (standard.ToLower()=="false")
+                    e.Value = imageList1.Images[1];
+                else
+                    e.Value = imageList1.Images[0];
+            }
+        }
+
+        
+
+        private void dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+                        
+            string oldFileName = dataGridView.Rows[e.RowIndex].Cells["txtColId"].Value.ToString();
+            string newFileNameOnly= dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+            string oldFileNameOnly = Path.GetFileNameWithoutExtension(oldFileName);
+            var objSelect= _list.Where(t => t.FileNameOnly == newFileNameOnly).FirstOrDefault();
+
+
+            string extension = Path.GetExtension(oldFileName);
+            
+            string path = oldFileName.Replace(oldFileNameOnly + extension, "");
+
+            if (objSelect!=null)
+            {
+                try
+                {
+                    string newFileName = path + newFileNameOnly + extension;
+                    System.IO.File.Move(oldFileName, newFileName);
+                    objSelect.FileName = newFileName;
+                    objSelect.FileNameOnly = newFileNameOnly;
+
+                    //update isstandard
+                    foreach (Form frm in Application.OpenForms)
+                    {
+                        if (frm.GetType() == typeof(FormUpload))
+                        {
+                            ClassFile newClassFile = new ClassFile();
+                            string reason = "";
+                            bool IsparseAgain= ((FormUpload)frm).ParseDetail(objSelect.FileNameOnly + extension, newClassFile, ref reason);
+
+
+                            objSelect.IsStandard = newClassFile.IsStandard;
+                            objSelect.Reason = reason;
+                            objSelect.NotExistKeyword = newClassFile.NotExistKeyword;
+                            objSelect.ListClassify = newClassFile.ListClassify;
+                            break;
+                        }
+                    }                                     
+
+                    LoadGrid();
+
+                    MessageBox.Show("File " + oldFileNameOnly + " renamed to file " + newFileNameOnly);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Can not rename this file " + oldFileNameOnly);
+                    LogHelper.WriteLog(ex.Message);
+                    LoadGrid();                    
+                }
+                
+
+                
+            }
+            
+            
+
         }
     }
 
