@@ -100,7 +100,6 @@
             this.checkBoxRemember.TabIndex = 6;
             this.checkBoxRemember.Text = "Remember ";
             this.checkBoxRemember.UseVisualStyleBackColor = true;
-            this.checkBoxRemember.Visible = false;
             // 
             // FormLogin
             // 

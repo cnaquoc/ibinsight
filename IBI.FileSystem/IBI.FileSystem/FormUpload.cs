@@ -314,50 +314,56 @@ namespace IBI.FileSystem
 
         private void btnBrowseFolder_Click(object sender, EventArgs e)
         {
+            OpenUpLoadFile(ConstantInfo.STANDARD_CLASSIFY);
+        }
+
+
+
+        private void OpenUpLoadFile(string type)
+        {
             using (var fbd = new FolderBrowserDialog())
             {
-                
+
                 DialogResult result = fbd.ShowDialog();
 
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
-                    
+
                     string[] files = Directory.GetFiles(fbd.SelectedPath);
-                                        
-                    if(files.Length>0)
+
+                    if (files.Length > 0)
                     {
                         //Show Dialog Files
                         List<ClassFile> list = new List<ClassFile>();
-                        foreach( var filename in files)
+                        foreach (var filename in files)
                         {
                             //show only files got extension
                             string extension = Path.GetExtension(filename);
 
-                            //string filenameOnly = Path.GetFileName(filename);                                                       
-
-
                             if (!string.IsNullOrEmpty(extension))
                             {                                
                                 //ParseStandard
-                                ClassFile cf = ParseStandard(filename);                                
-                                list.Add(cf);
-                            }                           
-                            
-                        }     
-                        
-                        if (list.Count>0)
-                        { 
-                            DialogFiles df = new DialogFiles(list);
+                                ClassFile cf = ParseFileName(filename, type);
+                                list.Add(cf);                               
+
+                            }
+
+                        }
+
+                        if (list.Count > 0)
+                        {
+                            DialogFiles df = new DialogFiles(list, type, this.Width, Convert.ToInt32((Math.Round(this.Height * 1.0))));
                             df.ShowDialog();
 
+                            #region Ignore this code
+                            /*
                             if (!string.IsNullOrEmpty(df.getFileName))
                             {
                                 
                                 var returnObj = df.getFileInfo;
 
-                                txtFile.Text = returnObj.FileName; //df.getFileName;
-
-                                //Get companyinfo from ticker
+                                txtFile.Text = returnObj.FileName; 
+                                
                                 var company = db.Local_Companies.Where(t => t.Ticker == returnObj.Code).FirstOrDefault();
                                 
                                 txtCompanyName.Text =  company==null? "": company.Name;
@@ -381,26 +387,22 @@ namespace IBI.FileSystem
                                     dtpTo.Value = DateTime.Now;
                                 }
                                 
-
                                 //Get classifyinfo from keyword
                                 string keyword = returnObj.Keyword;
 
                                 var classifyList = db.Local_Classifies.ToList();
-                                var classifyListFound = Utils.FindClassifyFromKeyword(keyword, classifyList);
-
-                                //txtSelectedClassify.Text = classify == null ? "" : "[" + classify.Code + "] " + classify.Name;
-                                //lblSelectedMessage.Text = txtSelectedClassify.Text;
-                                //txtClassifyId.Text = classify == null ? "" : classify.Id.ToString();
-
+                                var classifyListFound = Utils.FindClassifyFromKeyword(keyword, classifyList);                               
 
                             }
-                                
+                            */
+                            #endregion
+
                         }
                         else
                         {
                             MessageBox.Show("No files exist in this folder!");
                         }
-                        
+
                     }
                     else
                     {
@@ -410,32 +412,9 @@ namespace IBI.FileSystem
             }
         }
 
+       
 
-        //private Local_Classify FindClassifyFromKeyword(string keyword)
-        //{
-        //    if (string.IsNullOrEmpty(keyword)) return null;
-
-        //    var classifyList = db.Local_Classifies.ToList();
-        //    foreach (var classify in classifyList)
-        //    {
-        //        if (!string.IsNullOrEmpty(classify.Keyword))
-        //        {
-        //            //var keywordArray = classify.Keyword.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-        //            var keywordArray = classify.Keyword.Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
-        //            foreach (var subkey in keywordArray)
-        //            {                        
-        //                if (keyword.Contains(subkey.Replace(@"\r", "").Trim()))
-        //                {
-        //                    return classify;
-        //                }
-        //            }
-        //        }
-
-        //    }
-        //    return null;
-        //}
-
-        private ClassFile ParseStandard(string filename)
+        private ClassFile ParseFileName(string filename, string type)
         {
             string filenameOnly = Path.GetFileName(filename);
 
@@ -445,7 +424,15 @@ namespace IBI.FileSystem
 
             bool isStandard = false;
             string reason = "";
-            isStandard = ParseDetail(filenameOnly, result, ref reason);            
+            if (type == ConstantInfo.STANDARD_CLASSIFY)
+            {
+                isStandard = ParseDetail(filenameOnly, result, ref reason);
+            }
+            else if (type == ConstantInfo.NOT_CLASSIFY)
+            {
+                isStandard = ParseDetailNotClassify(filenameOnly, result, ref reason);
+            }
+
             if (!isStandard)
             {
                 result.IsStandard = isStandard;
@@ -471,7 +458,7 @@ namespace IBI.FileSystem
             //get string date
             //get string code
 
-            int posCode = GetPostionFirstCharacter(filename);
+            int posCode =Utils.GetPostionFirstCharacter(filename);
             string filenameDate = filename.Substring(0, posCode);
             string filenameNotDate = filename.Substring(posCode );
 
@@ -498,7 +485,7 @@ namespace IBI.FileSystem
 
 
             //Parse date to
-            DateTime dateTo = StringToDateTime(to, ref isDateTime);
+            DateTime dateTo = Utils.StringToDateTime(to, ref isDateTime);
             if (!isDateTime)
             {
                 reason = "Invalid date";
@@ -506,7 +493,7 @@ namespace IBI.FileSystem
             }
             
             //Parse date from
-            DateTime dateFrom = StringToDateTime(from, ref isDateTime);
+            DateTime dateFrom = Utils.StringToDateTime(from, ref isDateTime);
             if (!isDateTime)
             {
                 reason = "Invalid date";
@@ -583,66 +570,137 @@ namespace IBI.FileSystem
             return isStandard;
         }
 
-
-        private int GetPostionFirstCharacter(string filename)
+        public bool ParseDetailNotClassify(string filename, ClassFile classFile, ref string reason)
         {
-            int length = filename.Length;
-            for (int i = 0; i < length; i++)
+            bool isNotStandard = true;
+
+            //leng<8 + 1 + 1 + 1 + 1 + 4 =16
+            bool isDateTime = true;
+            if (filename.Trim().Length < 8)
             {
-                var value = filename[i];
-                if( ( value >= 'A' && value <= 'Z') || (value >= 'a' && value <= 'z'))
+                reason = "Invalid date"; ;  //not show 4 .pdf
+                return false;
+            }
+
+            //get string date
+            //get string code
+
+            int posCode = Utils.GetPostionFirstCharacter(filename);
+            string filenameDate = filename.Substring(0, posCode);
+            string filenameNotDate = filename.Substring(posCode);
+
+            string filenameDateTemp = filenameDate.Replace("-", "").Replace("_", "").Replace(" ", "").Trim();
+
+            if (!(filenameDateTemp.Length == 8))
+            {
+                reason = "Invalid date";
+                return false;
+            }
+
+            string to = "";
+            string from = "";
+            
+            to = filenameDateTemp;
+            from = filenameDateTemp;
+
+            //Parse date to
+            DateTime dateTo = Utils.StringToDateTime(to, ref isDateTime);
+            if (!isDateTime)
+            {
+                reason = "Invalid date";
+                return false;
+            }
+
+            //Parse date from
+            DateTime dateFrom = Utils.StringToDateTime(from, ref isDateTime);
+            if (!isDateTime)
+            {
+                reason = "Invalid date";
+                return false;
+            }
+
+            var compare = DateTime.Compare(dateFrom, dateTo);
+            if (compare > 0)
+            {
+                var dateTemp = dateFrom;
+                dateFrom = dateTo;
+                dateTo = dateTemp;
+            }
+
+
+
+            //Get TaxCode
+
+            string filenameNotDateExcluseExtension = Path.GetFileNameWithoutExtension(filenameNotDate);
+
+            string filenameNotDateReverse = Utils.Reverse(filenameNotDateExcluseExtension);
+            int posLetter = Utils.GetPostionFirstNotIsNumber(filenameNotDateReverse);            
+            string taxcode = filenameNotDateReverse.Substring(0, posLetter);
+
+            if (!(taxcode.Length ==10 || taxcode.Length == 13))
+            {
+                reason = "Invalid taxcode";
+                return false;
+            }
+
+            taxcode = Utils.Reverse(taxcode);
+
+            //Keep this code is running correct
+
+            filename = filenameDateTemp + "-" + filenameNotDate;
+            
+
+            //Parse keyword
+            string extension = Path.GetExtension(filename);
+            string keyword = filenameNotDate.Replace(taxcode, "").Trim();
+
+
+
+            var company = db.Local_Companies.Where(t => t.TaxCode == taxcode).FirstOrDefault();
+            if (company == null)
+            {
+                // insert new company if not exist
+                company = new Local_Company()
                 {
-                    return i;
-                }
+                    TaxCode = taxcode,
+                    Name= "",
+                    Id = Guid.NewGuid()                    
+                };
+                db.Local_Companies.InsertOnSubmit(company);
+                db.SubmitChanges();
             }
 
-            return 0;
-        }
 
-        private bool CheckIsNumberic()
-        {
-            return true;
-        }
+            var classifyList = db.Local_Classifies.ToList();
+            var classifyListFound = Utils.FindClassifyFromKeyword(keyword, classifyList);
 
-        private bool CheckIsOneDate(string input)
-        {
-            return true;
-        }
+            bool notExistKeyword = true;
 
-        private bool CheckIsTwoDate(string input)
-        {
-            return true;
-        }
-
-        private DateTime StringToDateTime(string inputDate, ref bool isDateTime)
-        {
-            isDateTime = true;
-            DateTime result = new DateTime();
-            try
+            if (classifyListFound.Count>0)
             {
-                result = DateTime.ParseExact(inputDate, "yyyyMMdd", CultureInfo.InvariantCulture);
+                isNotStandard = false;
+                reason = "Exist keyword";
+                notExistKeyword = false;
             }
-            catch (Exception ex)
-            {
-                isDateTime = false;
-                Helpers.LogHelper.WriteLog(ex.Message);
-            }            
-            return result;
+
+            // Assign data to class file            
+            classFile.Code = taxcode;
+            classFile.IsStandard = isNotStandard;
+            classFile.Keyword = keyword;
+            classFile.DateFrom = dateFrom;
+            classFile.DateTo = dateTo;
+            classFile.CompanyId = company.Id.ToString();
+            classFile.ListClassify = classifyListFound;
+            classFile.NotExistKeyword = notExistKeyword;
+
+            return isNotStandard;
         }
 
-        private DateTime StringToDateTime(string inputDate)
-        {            
-            DateTime result = new DateTime();
-            try
-            {
-                result = DateTime.ParseExact(inputDate, "yyyyMMdd", CultureInfo.InvariantCulture);
-            }
-            catch (Exception ex)
-            {                
-                Helpers.LogHelper.WriteLog(ex.Message);
-            }
-            return result;
-        }
+
+        
+        
+
+        
 
         private void treeViewClassify_AfterCheck(object sender, TreeViewEventArgs e)
         {
@@ -725,6 +783,9 @@ namespace IBI.FileSystem
 
         }
 
-        
+        private void btnUploadNotKeyword_Click(object sender, EventArgs e)
+        {
+            OpenUpLoadFile(ConstantInfo.NOT_CLASSIFY);
+        }
     }
 }

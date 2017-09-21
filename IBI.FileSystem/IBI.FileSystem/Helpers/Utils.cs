@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -82,6 +83,73 @@ namespace IBI.FileSystem.Helpers
             return null;
         }
 
-        
+        public static string Reverse(string s)
+        {
+            char[] charArray = s.ToCharArray();
+            Array.Reverse(charArray);
+            return new string(charArray);
+        }
+
+        public static int GetPostionFirstCharacter(string filename)
+        {
+            int length = filename.Length;
+            for (int i = 0; i < length; i++)
+            {
+                var value = filename[i];
+                if ((value >= 'A' && value <= 'Z') || (value >= 'a' && value <= 'z'))
+                {
+                    return i;
+                }
+            }
+
+            return 0;
+        }
+
+        public static int GetPostionFirstNotIsNumber(string filename)
+        {
+            int length = filename.Length;
+            for (int i = 0; i < length; i++)
+            {
+                var value = filename[i];
+                if (!(value >= '0' && value <= '9'))
+                {
+                    return i;
+                }
+            }
+
+            return 0;
+        }
+
+
+
+        public static DateTime StringToDateTime(string inputDate, ref bool isDateTime)
+        {
+            isDateTime = true;
+            DateTime result = new DateTime();
+            try
+            {
+                result = DateTime.ParseExact(inputDate, "yyyyMMdd", CultureInfo.InvariantCulture);
+            }
+            catch (Exception ex)
+            {
+                isDateTime = false;
+                Helpers.LogHelper.WriteLog(ex.Message);
+            }
+            return result;
+        }
+
+        public static DateTime StringToDateTime(string inputDate)
+        {
+            DateTime result = new DateTime();
+            try
+            {
+                result = DateTime.ParseExact(inputDate, "yyyyMMdd", CultureInfo.InvariantCulture);
+            }
+            catch (Exception ex)
+            {
+                Helpers.LogHelper.WriteLog(ex.Message);
+            }
+            return result;
+        }
     }
 }

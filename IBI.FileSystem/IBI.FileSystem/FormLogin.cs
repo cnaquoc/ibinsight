@@ -28,13 +28,13 @@ namespace IBI.FileSystem
             db = DB_Singleton.GetDatabase();
 
 
-            var settings = db.Local_Settings.ToList();
-            string remember= GetSettingValue(settings, "remember");
+            //var settings = db.Local_Settings.ToList();
+            string remember= Properties.Settings.Default.Remember;
             checkBoxRemember.Checked = false;
             if (remember.ToLower() == "true")
             {
-                txtUserName.Text = GetSettingValue(settings, "username");
-                txtPassword.Text = GetSettingValue(settings, "password");
+                txtUserName.Text = Properties.Settings.Default.Username;
+                txtPassword.Text = Properties.Settings.Default.Password;
                 checkBoxRemember.Checked = true;
             }
 
@@ -90,15 +90,17 @@ namespace IBI.FileSystem
                     AssignSettings();
                     result = 0;
 
+
+                    
                     //Save remember
-                    //SaveSetting("username", txtUserName.Text);
-                    //SaveSetting("password", txtPassword.Text);
+                    
+                    Properties.Settings.Default.Username = txtUserName.Text;
+                    Properties.Settings.Default.Password = txtPassword.Text;
+                    string remember = "false";
+                    if (checkBoxRemember.Checked) remember = "true";
 
-                    //string remember = "false";
-                    //if (checkBoxRemember.Checked) remember = "true";
-
-                    //SaveSetting("remember", remember);
-
+                    Properties.Settings.Default.Remember = remember;
+                    Properties.Settings.Default.Save();
 
 
 

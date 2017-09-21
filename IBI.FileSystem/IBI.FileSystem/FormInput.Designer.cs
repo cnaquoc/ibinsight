@@ -38,7 +38,11 @@
             this.dtpFrom = new System.Windows.Forms.DateTimePicker();
             this.dtpTo = new System.Windows.Forms.DateTimePicker();
             this.btnSearchAll = new System.Windows.Forms.Button();
+            this.rdbExistClassify = new System.Windows.Forms.RadioButton();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.rdbExcludeClassify = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridView
@@ -47,12 +51,13 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView.Location = new System.Drawing.Point(12, 54);
+            this.dataGridView.Location = new System.Drawing.Point(12, 119);
+            this.dataGridView.MultiSelect = false;
             this.dataGridView.Name = "dataGridView";
-            this.dataGridView.ReadOnly = true;
-            this.dataGridView.Size = new System.Drawing.Size(1242, 499);
+            this.dataGridView.Size = new System.Drawing.Size(1242, 434);
             this.dataGridView.TabIndex = 0;
             this.dataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellContentClick);
+            this.dataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellValueChanged);
             // 
             // btnClose
             // 
@@ -136,11 +141,46 @@
             this.btnSearchAll.UseVisualStyleBackColor = true;
             this.btnSearchAll.Click += new System.EventHandler(this.btnSearchAll_Click);
             // 
+            // rdbExistClassify
+            // 
+            this.rdbExistClassify.AutoSize = true;
+            this.rdbExistClassify.Checked = true;
+            this.rdbExistClassify.Location = new System.Drawing.Point(17, 19);
+            this.rdbExistClassify.Name = "rdbExistClassify";
+            this.rdbExistClassify.Size = new System.Drawing.Size(98, 17);
+            this.rdbExistClassify.TabIndex = 15;
+            this.rdbExistClassify.TabStop = true;
+            this.rdbExistClassify.Text = "Include Classify";
+            this.rdbExistClassify.UseVisualStyleBackColor = true;
+            this.rdbExistClassify.CheckedChanged += new System.EventHandler(this.rdbExistClassify_CheckedChanged);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.rdbExcludeClassify);
+            this.groupBox1.Controls.Add(this.rdbExistClassify);
+            this.groupBox1.Location = new System.Drawing.Point(12, 51);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(334, 48);
+            this.groupBox1.TabIndex = 16;
+            this.groupBox1.TabStop = false;
+            // 
+            // rdbExcludeClassify
+            // 
+            this.rdbExcludeClassify.AutoSize = true;
+            this.rdbExcludeClassify.Location = new System.Drawing.Point(213, 19);
+            this.rdbExcludeClassify.Name = "rdbExcludeClassify";
+            this.rdbExcludeClassify.Size = new System.Drawing.Size(101, 17);
+            this.rdbExcludeClassify.TabIndex = 15;
+            this.rdbExcludeClassify.Text = "Exclude Classify";
+            this.rdbExcludeClassify.UseVisualStyleBackColor = true;
+            this.rdbExcludeClassify.CheckedChanged += new System.EventHandler(this.rdbExcludeClassify_CheckedChanged);
+            // 
             // FormInput
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1266, 605);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.dtpTo);
             this.Controls.Add(this.dtpFrom);
             this.Controls.Add(this.btnSearchAll);
@@ -156,6 +196,8 @@
             this.Text = "FormInput";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -173,5 +215,8 @@
         private System.Windows.Forms.DateTimePicker dtpFrom;
         private System.Windows.Forms.DateTimePicker dtpTo;
         private System.Windows.Forms.Button btnSearchAll;
+        private System.Windows.Forms.RadioButton rdbExistClassify;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.RadioButton rdbExcludeClassify;
     }
 }

@@ -74,3 +74,4 @@ D:\GitHub\IBI.FileSystem\IBI.FileSystem\obj\Debug\IBI.FileSystem.csproj.CoreComp
 D:\GitHub\IBI.FileSystem\IBI.FileSystem\obj\Debug\IBI.FileSystem.exe
 D:\GitHub\IBI.FileSystem\IBI.FileSystem\obj\Debug\IBI.FileSystem.pdb
 D:\GitHub\IBI.FileSystem\IBI.FileSystem\obj\Debug\IBI.FileSystem.csprojResolveAssemblyReference.cache
+D:\GitHub\IBI.FileSystem\IBI.FileSystem\obj\Debug\IBI.FileSystem.DialogClassify.resources

@@ -86,6 +86,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataClasses_Local.dbml</DependentUpon>
     </Compile>
+    <Compile Include="DialogClassify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DialogClassify.Designer.cs">
+      <DependentUpon>DialogClassify.cs</DependentUpon>
+    </Compile>
     <Compile Include="DialogCompany.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -148,6 +154,7 @@
     </Compile>
     <Compile Include="Helpers\ClassFileInput.cs" />
     <Compile Include="Helpers\ClassFile.cs" />
+    <Compile Include="Helpers\ConstantInfo.cs" />
     <Compile Include="Helpers\SettingInfo.cs" />
     <Compile Include="Helpers\PinvokeWindowsNetworking.cs" />
     <Compile Include="Helpers\Impersonator.cs" />
@@ -165,6 +172,9 @@
       <DependentUpon>FormUpload.cs</DependentUpon>
     </Compile>
     <Compile Include="DB_Singleton.cs" />
+    <EmbeddedResource Include="DialogClassify.resx">
+      <DependentUpon>DialogClassify.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DialogCompany.resx">
       <DependentUpon>DialogCompany.cs</DependentUpon>
     </EmbeddedResource>
