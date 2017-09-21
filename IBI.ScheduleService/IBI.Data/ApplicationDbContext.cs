@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Configuration;
+using Newtonsoft.Json.Linq;
+using System.IO;
 
 namespace IBI.Data
 {
@@ -20,8 +22,9 @@ namespace IBI.Data
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=Test;Integrated Security=true"; //ConfigurationSettings.AppSettings["ApplicationDBConnectionStringData"].ToString();
+        {                    
+            //string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=Test1;Integrated Security=true"; //ConfigurationSettings.AppSettings["ApplicationDBConnectionStringData"].ToString();
+            string connectionString = ConfigurationSettings.AppSettings["ApplicationDBConnectionString"].ToString();
             optionsBuilder.UseSqlServer(connectionString);
         }
 

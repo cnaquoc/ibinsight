@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.EntityFrameworkCore;
 using IBI.Data.IManagers;
+using Newtonsoft.Json.Linq;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace IBI.ScheduleService
 {
@@ -17,11 +20,14 @@ namespace IBI.ScheduleService
         [STAThread]
         static void Main()
         {
+
+            
+
+           
+
             Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            //string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=Test;Integrated Security=true";            
-            ApplicationDbContext context = new ApplicationDbContext();
-            //IStockPriceManager stockpriceManager =new ;
+            Application.SetCompatibleTextRenderingDefault(false);                      
+            ApplicationDbContext context = new ApplicationDbContext();           
             Application.Run(new frmMain(context));
             
         }

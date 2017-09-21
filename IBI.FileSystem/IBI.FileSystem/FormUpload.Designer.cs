@@ -53,6 +53,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.dtpTo = new System.Windows.Forms.DateTimePicker();
             this.label3 = new System.Windows.Forms.Label();
+            this.btnUploadNotKeyword = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblFile
@@ -297,6 +298,16 @@
             this.label3.TabIndex = 24;
             this.label3.Text = "To date:";
             // 
+            // btnUploadNotKeyword
+            // 
+            this.btnUploadNotKeyword.Location = new System.Drawing.Point(617, 12);
+            this.btnUploadNotKeyword.Name = "btnUploadNotKeyword";
+            this.btnUploadNotKeyword.Size = new System.Drawing.Size(197, 23);
+            this.btnUploadNotKeyword.TabIndex = 25;
+            this.btnUploadNotKeyword.Text = "Upload not keyword...";
+            this.btnUploadNotKeyword.UseVisualStyleBackColor = true;
+            this.btnUploadNotKeyword.Click += new System.EventHandler(this.btnUploadNotKeyword_Click);
+            // 
             // FormUpload
             // 
             this.AcceptButton = this.btnUpload;
@@ -304,6 +315,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnClose;
             this.ClientSize = new System.Drawing.Size(917, 602);
+            this.Controls.Add(this.btnUploadNotKeyword);
             this.Controls.Add(this.dtpTo);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.dtpFrom);
@@ -368,5 +380,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DateTimePicker dtpTo;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btnUploadNotKeyword;
     }
 }

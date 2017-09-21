@@ -23,7 +23,7 @@ namespace IBI.FileSystem
         public ClassFile getFileInfo { get { return fileInfo; } }
         public string getFileName { get { return _FileName; } }
        
-        public DialogFiles(List<ClassFile> list, int width, int height)
+        public DialogFiles(List<ClassFile> list, string type, int width, int height)
         {
             InitializeComponent();
 
@@ -332,13 +332,29 @@ namespace IBI.FileSystem
                 Guid CompanyId = new Guid(classFile.CompanyId);
                 DateTime currentDate = DateTime.Now;
 
-                foreach (var classify in classFile.ListClassify)
+                if (classFile.ListClassify.Count>0)
+                {
+                    foreach (var classify in classFile.ListClassify)
+                    {
+                        Local_File local_File = new Local_File();
+                        local_File.FileName = Path.GetFileName(classFile.FileName);
+                        local_File.Id = Guid.NewGuid();
+                        local_File.CompanyId = CompanyId;
+                        local_File.ClassifyId = classify.Id;
+                        local_File.CreatedDate = currentDate;
+                        local_File.UserId = Helpers.UserInfo.Id;
+                        local_File.FileGUID = FileGUID;
+                        local_File.DateFrom = classFile.DateFrom;
+                        local_File.DateTo = classFile.DateTo;
+                        listInsert.Add(local_File);
+                    }
+                }
+                else
                 {
                     Local_File local_File = new Local_File();
                     local_File.FileName = Path.GetFileName(classFile.FileName);
                     local_File.Id = Guid.NewGuid();
-                    local_File.CompanyId = CompanyId;
-                    local_File.ClassifyId = classify.Id;
+                    local_File.CompanyId = CompanyId;                    
                     local_File.CreatedDate = currentDate;
                     local_File.UserId = Helpers.UserInfo.Id;
                     local_File.FileGUID = FileGUID;
@@ -346,6 +362,7 @@ namespace IBI.FileSystem
                     local_File.DateTo = classFile.DateTo;
                     listInsert.Add(local_File);
                 }
+                
 
 
 
@@ -438,7 +455,7 @@ namespace IBI.FileSystem
                 {
                     MessageBox.Show("Can not rename this file " + oldFileNameOnly);
                     LogHelper.WriteLog(ex.Message);
-                    LoadGrid();                    
+                    //LoadGrid();                    
                 }
                 
 

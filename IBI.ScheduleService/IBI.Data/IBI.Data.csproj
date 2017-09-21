@@ -187,9 +187,9 @@
     <Compile Include="IManagers\IStockPriceManager.cs" />
     <Compile Include="Managers\BaseManager.cs" />
     <Compile Include="Managers\StockPriceManager.cs" />
-    <Compile Include="Migrations\20170920044634_Init.cs" />
-    <Compile Include="Migrations\20170920044634_Init.designer.cs">
-      <DependentUpon>20170920044634_Init.cs</DependentUpon>
+    <Compile Include="Migrations\20170921043435_Init.cs" />
+    <Compile Include="Migrations\20170921043435_Init.designer.cs">
+      <DependentUpon>20170921043435_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\ApplicationDbContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

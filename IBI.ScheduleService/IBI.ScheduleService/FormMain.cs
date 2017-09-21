@@ -46,6 +46,8 @@ namespace IBI.ScheduleService
             Left = Top = 0;
             Width = Screen.PrimaryScreen.WorkingArea.Width;
             Height = Screen.PrimaryScreen.WorkingArea.Height;
+            
+
         }
 
         private void btnRun_Click(object sender, EventArgs e)
