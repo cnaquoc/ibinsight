@@ -2,7 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\IBI.FileSystem",
-    "\\IBI.FileSystem\\IBI.FileSystem"
+    "\\IBI.Web.API",
+    "\\IBI.Web.API\\IBI.Web.API",
+    "\\IBI.Web.API\\IBI.Web.API\\IBI.Data.API"
   ],
+  "SelectedNode": "\\IBI.Web.API",
   "PreviewInSolutionExplorer": false
 }

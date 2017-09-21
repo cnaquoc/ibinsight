@@ -10771,7 +10771,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Administrator.GE6DOKQOI986PZC\\.nuget\\packages\\": {}
+    "C:\\Users\\Windows 10 TIMT\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
@@ -10779,14 +10779,14 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "D:\\GitHub\\IBI.Web.API\\IBI.Web.API\\IBI.Web.API\\IBI.Web.API.csproj",
+      "projectUniqueName": "C:\\Users\\Windows 10 TIMT\\Source\\Repos\\ibinsight\\IBI.Web.API\\IBI.Web.API\\IBI.Web.API\\IBI.Web.API.csproj",
       "projectName": "IBI.Web.API",
-      "projectPath": "D:\\GitHub\\IBI.Web.API\\IBI.Web.API\\IBI.Web.API\\IBI.Web.API.csproj",
-      "packagesPath": "C:\\Users\\Administrator.GE6DOKQOI986PZC\\.nuget\\packages\\",
-      "outputPath": "D:\\GitHub\\IBI.Web.API\\IBI.Web.API\\IBI.Web.API\\obj\\",
+      "projectPath": "C:\\Users\\Windows 10 TIMT\\Source\\Repos\\ibinsight\\IBI.Web.API\\IBI.Web.API\\IBI.Web.API\\IBI.Web.API.csproj",
+      "packagesPath": "C:\\Users\\Windows 10 TIMT\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Windows 10 TIMT\\Source\\Repos\\ibinsight\\IBI.Web.API\\IBI.Web.API\\IBI.Web.API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Administrator.GE6DOKQOI986PZC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Windows 10 TIMT\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -10799,8 +10799,8 @@
       "frameworks": {
         "netcoreapp1.1": {
           "projectReferences": {
-            "D:\\GitHub\\IBI.Web.API\\IBI.Web.API\\IBI.Data.API\\IBI.Data.API.csproj": {
-              "projectPath": "D:\\GitHub\\IBI.Web.API\\IBI.Web.API\\IBI.Data.API\\IBI.Data.API.csproj"
+            "C:\\Users\\Windows 10 TIMT\\Source\\Repos\\ibinsight\\IBI.Web.API\\IBI.Web.API\\IBI.Data.API\\IBI.Data.API.csproj": {
+              "projectPath": "C:\\Users\\Windows 10 TIMT\\Source\\Repos\\ibinsight\\IBI.Web.API\\IBI.Web.API\\IBI.Data.API\\IBI.Data.API.csproj"
             }
           }
         }
