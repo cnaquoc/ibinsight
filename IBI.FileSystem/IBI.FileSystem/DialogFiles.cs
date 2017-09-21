@@ -23,9 +23,13 @@ namespace IBI.FileSystem
         public ClassFile getFileInfo { get { return fileInfo; } }
         public string getFileName { get { return _FileName; } }
        
-        public DialogFiles(List<ClassFile> list)
+        public DialogFiles(List<ClassFile> list, int width, int height)
         {
             InitializeComponent();
+
+            this.Width = width;
+            this.Height = height;
+
             db = DB_Singleton.GetDatabase();
             lblStandard.Text = "";
             lblNotStandard.Text = "";
@@ -87,7 +91,7 @@ namespace IBI.FileSystem
         {
             //Format grid
 
-            
+            dataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.None;
             //dataGridView.BackgroundColor= Color.
 
@@ -161,6 +165,14 @@ namespace IBI.FileSystem
             txtColId.DataPropertyName = "FileName";
             txtColId.Visible = false;
             dataGridView.Columns.Add(txtColId);
+
+            DataGridViewButtonColumn btnColOpenFile = new DataGridViewButtonColumn();
+            btnColOpenFile.HeaderText = "";
+            btnColOpenFile.Text = "Open file...";
+            btnColOpenFile.Name = "btnOpenFile";
+            btnColOpenFile.Width = 80;
+            btnColOpenFile.UseColumnTextForButtonValue = true;
+            dataGridView.Columns.Add(btnColOpenFile);
 
 
             dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
@@ -414,9 +426,11 @@ namespace IBI.FileSystem
                             objSelect.ListClassify = newClassFile.ListClassify;
                             break;
                         }
-                    }                                     
+                    }
 
-                    LoadGrid();
+                    dataGridView.Update();
+                    dataGridView.Refresh();
+                    //LoadGrid();
 
                     MessageBox.Show("File " + oldFileNameOnly + " renamed to file " + newFileNameOnly);
                 }
@@ -433,6 +447,26 @@ namespace IBI.FileSystem
             
             
 
+        }
+
+        private void dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if ((e.ColumnIndex == 8) && e.RowIndex > -1) //click open file 1 (col Open file) 5 (col File name)
+            {
+                DataGridViewRow row = this.dataGridView.CurrentRow;
+                string filename = row.Cells["txtColId"].Value.ToString();
+                if (filename != "")
+                {                    
+                    if (File.Exists(filename))
+                    {
+                        System.Diagnostics.Process.Start(filename);
+                    }
+                    else
+                    {
+                        MessageBox.Show(filename + " does not exist");
+                    }
+                }
+            }
         }
     }
 

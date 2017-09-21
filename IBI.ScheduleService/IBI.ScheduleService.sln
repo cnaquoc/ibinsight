@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.15
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBI.ScheduleService", "IBI.ScheduleService\IBI.ScheduleService.csproj", "{72F59DE1-F444-41AC-8E68-E3D99B1629DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBI.Data", "IBI.Data\IBI.Data.csproj", "{5B24CD14-F1FB-4B6F-90FF-9A986B6DA954}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{72F59DE1-F444-41AC-8E68-E3D99B1629DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72F59DE1-F444-41AC-8E68-E3D99B1629DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72F59DE1-F444-41AC-8E68-E3D99B1629DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72F59DE1-F444-41AC-8E68-E3D99B1629DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B24CD14-F1FB-4B6F-90FF-9A986B6DA954}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B24CD14-F1FB-4B6F-90FF-9A986B6DA954}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B24CD14-F1FB-4B6F-90FF-9A986B6DA954}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B24CD14-F1FB-4B6F-90FF-9A986B6DA954}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {51218AA8-0296-43DD-960B-2BDCB7F9C543}
+	EndGlobalSection
+EndGlobal

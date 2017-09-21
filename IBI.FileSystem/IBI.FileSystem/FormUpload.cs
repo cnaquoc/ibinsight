@@ -347,7 +347,7 @@ namespace IBI.FileSystem
                         
                         if (list.Count>0)
                         { 
-                            DialogFiles df = new DialogFiles(list);
+                            DialogFiles df = new DialogFiles(list, this.Width , Convert.ToInt32((Math.Round(this.Height * 1.0))));
                             df.ShowDialog();
 
                             if (!string.IsNullOrEmpty(df.getFileName))
