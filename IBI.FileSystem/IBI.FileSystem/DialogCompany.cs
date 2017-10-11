@@ -46,13 +46,14 @@ namespace IBI.FileSystem
         private void FormatGrid()
         {
             dataGridView_Company.AlternatingRowsDefaultCellStyle.BackColor = Color.LightSkyBlue;
-
+            dataGridView_Company.RowHeadersVisible = false;
             dataGridView_Company.Columns[0].HeaderText = "Id";
             dataGridView_Company.Columns[0].Width = 10;
             dataGridView_Company.Columns[0].Visible = false;
 
             dataGridView_Company.Columns[1].HeaderText = "Name";
             dataGridView_Company.Columns[1].Width = 300;
+            dataGridView_Company.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
             dataGridView_Company.Columns[2].HeaderText = "Ticker";
             dataGridView_Company.Columns[2].Width = 100;

@@ -43,6 +43,7 @@ namespace IBI.FileSystem
         private void FormatGrid()
         {
             dataGridView.RowHeadersVisible = false;
+            dataGridView.ClearSelection();
             //dataGridView.AlternatingRowsDefaultCellStyle.BackColor = Color.LightSkyBlue;
 
             dataGridView.Columns[0].HeaderText = "Id";
@@ -54,7 +55,8 @@ namespace IBI.FileSystem
 
             dataGridView.Columns[2].HeaderText = "Name";
             dataGridView.Columns[2].Width = 420;
-                        
+            dataGridView.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
 
             //Add Select button to grid
             DataGridViewButtonColumn btnColSelect = new DataGridViewButtonColumn();

@@ -190,7 +190,7 @@ namespace IBI.FileSystem
                 if (Id != "")
                 {
                     string FileName = row.Cells["FileName"].Value.ToString();
-                    string FileGUID = row.Cells["FileGUID"].Value.ToString();
+                    string FileGUID = row.Cells["Id"].Value.ToString();
                     string extension = Path.GetExtension(FileName);
                     FileName = FileGUID + extension;
                     OpenFile(FileName);

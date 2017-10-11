@@ -30,11 +30,15 @@
         {
             this.components = new System.ComponentModel.Container();
             this.btnRun = new System.Windows.Forms.Button();
-            this.webBrowser = new System.Windows.Forms.WebBrowser();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.webBrowserHose = new System.Windows.Forms.WebBrowser();
+            this.timerHose = new System.Windows.Forms.Timer(this.components);
             this.btnClose = new System.Windows.Forms.Button();
             this.lblMessage = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.timerHnx = new System.Windows.Forms.Timer(this.components);
+            this.timerUpcom = new System.Windows.Forms.Timer(this.components);
+            this.webBrowserHnx = new System.Windows.Forms.WebBrowser();
+            this.webBrowserUpcom = new System.Windows.Forms.WebBrowser();
             this.SuspendLayout();
             // 
             // btnRun
@@ -48,22 +52,22 @@
             this.btnRun.UseVisualStyleBackColor = true;
             this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
             // 
-            // webBrowser
+            // webBrowserHose
             // 
-            this.webBrowser.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.webBrowserHose.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.webBrowser.Location = new System.Drawing.Point(12, 37);
-            this.webBrowser.MinimumSize = new System.Drawing.Size(20, 20);
-            this.webBrowser.Name = "webBrowser";
-            this.webBrowser.ScriptErrorsSuppressed = true;
-            this.webBrowser.Size = new System.Drawing.Size(418, 217);
-            this.webBrowser.TabIndex = 2;
-            this.webBrowser.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.webBrowser_DocumentCompleted);
+            this.webBrowserHose.Location = new System.Drawing.Point(12, 37);
+            this.webBrowserHose.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowserHose.Name = "webBrowserHose";
+            this.webBrowserHose.ScriptErrorsSuppressed = true;
+            this.webBrowserHose.Size = new System.Drawing.Size(418, 43);
+            this.webBrowserHose.TabIndex = 2;
+            this.webBrowserHose.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.webBrowserHose_DocumentCompleted);
             // 
-            // timer1
+            // timerHose
             // 
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.timerHose.Tick += new System.EventHandler(this.timerHose_Tick);
             // 
             // btnClose
             // 
@@ -95,6 +99,40 @@
             this.label1.TabIndex = 4;
             this.label1.Text = "Website screen";
             // 
+            // timerHnx
+            // 
+            this.timerHnx.Tick += new System.EventHandler(this.timerHnx_Tick);
+            // 
+            // timerUpcom
+            // 
+            this.timerUpcom.Tick += new System.EventHandler(this.timerUpcom_Tick);
+            // 
+            // webBrowserHnx
+            // 
+            this.webBrowserHnx.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.webBrowserHnx.Location = new System.Drawing.Point(12, 100);
+            this.webBrowserHnx.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowserHnx.Name = "webBrowserHnx";
+            this.webBrowserHnx.ScriptErrorsSuppressed = true;
+            this.webBrowserHnx.Size = new System.Drawing.Size(418, 43);
+            this.webBrowserHnx.TabIndex = 2;
+            this.webBrowserHnx.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.webBrowserHnx_DocumentCompleted);
+            // 
+            // webBrowserUpcom
+            // 
+            this.webBrowserUpcom.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.webBrowserUpcom.Location = new System.Drawing.Point(12, 158);
+            this.webBrowserUpcom.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowserUpcom.Name = "webBrowserUpcom";
+            this.webBrowserUpcom.ScriptErrorsSuppressed = true;
+            this.webBrowserUpcom.Size = new System.Drawing.Size(418, 43);
+            this.webBrowserUpcom.TabIndex = 2;
+            this.webBrowserUpcom.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.webBrowserUpcom_DocumentCompleted);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -102,7 +140,9 @@
             this.ClientSize = new System.Drawing.Size(442, 339);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lblMessage);
-            this.Controls.Add(this.webBrowser);
+            this.Controls.Add(this.webBrowserUpcom);
+            this.Controls.Add(this.webBrowserHnx);
+            this.Controls.Add(this.webBrowserHose);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnRun);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -118,11 +158,15 @@
         #endregion
 
         private System.Windows.Forms.Button btnRun;
-        private System.Windows.Forms.WebBrowser webBrowser;
-        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.WebBrowser webBrowserHose;
+        private System.Windows.Forms.Timer timerHose;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Label lblMessage;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Timer timerHnx;
+        private System.Windows.Forms.Timer timerUpcom;
+        private System.Windows.Forms.WebBrowser webBrowserHnx;
+        private System.Windows.Forms.WebBrowser webBrowserUpcom;
     }
 }
 

@@ -51,9 +51,17 @@ namespace IBI.ScheduleService
         }
 
         private void btnRun_Click(object sender, EventArgs e)
-        {            
-            string url =Utils.GetConfigValue("Url");
-            webBrowser.Navigate(url);
+        {
+            //string url =Utils.GetConfigValue("UrlHose");
+            string urlHose = Utils.GetConfigValue("UrlHose").Replace("*", "&"); //"http://priceboard.fpts.com.vn/?s=34&t=aAll";
+            webBrowserHose.Navigate(urlHose);
+
+            string urlHnx = Utils.GetConfigValue("UrlHnx").Replace("*", "&"); //"http://priceboard.fpts.com.vn/?s=34&t=aHNXIndex";
+            webBrowserHnx.Navigate(urlHnx);
+
+            string urlUpcom = Utils.GetConfigValue("UrlUpcom").Replace("*", "&"); //"http://priceboard.fpts.com.vn/?s=34&t=aHNXUpcomIndex";
+            webBrowserUpcom.Navigate(urlUpcom);
+
             lblMessage.Text = "Processing...";
             btnRun.Visible = false;
 
@@ -78,7 +86,7 @@ namespace IBI.ScheduleService
         {
             var l = new List<HtmlElement>();
 
-            var els = webBrowser.Document.GetElementsByTagName(tagName); // all elems with tag
+            var els = webBrowserHose.Document.GetElementsByTagName(tagName); // all elems with tag
             foreach (HtmlElement el in els)
             {
                 // getting "class" attribute value...
@@ -95,10 +103,10 @@ namespace IBI.ScheduleService
             return l.ToArray();
         }
 
-        private void webBrowser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        private void webBrowserHose_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         { 
-            timer1.Interval = 10000; // 10 seconds
-            timer1.Start();            
+            timerHose.Interval = 30000; // 10 seconds
+            timerHose.Start();            
         }
               
         private StockPrice GetOneRowData(HtmlElement row)
@@ -263,48 +271,142 @@ namespace IBI.ScheduleService
         
 
         #endregion
-        private void timer1_Tick(object sender, EventArgs e)
+        private void timerHose_Tick(object sender, EventArgs e)
         {
-            DateTime currentDate = DateTime.Now.Date;
-
-            var oldList = _context.StockPrices.Where(t => t.TransactionDate.Date.Equals(currentDate)).ToList(); 
-                        
-            var rows = GetElementsByClassName(webBrowser, "tr", "ui-widget-content jqgrow ui-row-ltr");
             List<StockPrice> list = new List<StockPrice>();
-            foreach (var row in rows)
-            {                
-                var stock = GetOneRowData(row);
-                if (!oldList.Where(t=>t.Ticker== stock.Ticker).Any())
-                {
-                    list.Add(stock);
-                }                                    
-            }
-           
+            ParseData(list, webBrowserHose);
             if (list.Count > 0)
             {
                 if (SaveData(list))
-                {
-                    MessageBox.Show("Successful!");
+                {                    
+                    lblMessage.Text = "Successful Hose";
                 }
                 else
                 {
-                    MessageBox.Show("Failed!");
+                    lblMessage.Text = "Failed Hose!";
                 }
             }
             else
             {
-                MessageBox.Show("No data or duplicated!");
+                lblMessage.Text = "No data or duplicated Hose!";
+            }
+            //btnRun.Visible = true;            
+            timerHose.Stop();
+        }
+
+        private void ParseData(List<StockPrice> list, WebBrowser wb)
+        {
+            DateTime currentDate = DateTime.Now.Date;
+
+            var oldList = _context.StockPrices.Where(t => t.TransactionDate.Date.Equals(currentDate)).ToList();
+
+            var tablerows = wb.Document.GetElementById("tbLP");
+
+            var bodyrows = tablerows.GetElementsByTagName("tbody");
+
+            if (bodyrows!=null)
+            {
+                var rows = bodyrows[0].GetElementsByTagName("tr");
+
+
+                foreach (HtmlElement row in rows)
+                {
+                    StockPrice stock = new StockPrice();
+                    if (!oldList.Where(t => t.Ticker == stock.Ticker).Any())
+                    {
+                        stock.Id = Guid.NewGuid();
+                        stock.TransactionDate = DateTime.Now;
+                        stock.Created = DateTime.Now;
+                        var nodeTicker = row.Children[0].GetElementsByTagName("span");
+
+                        stock.Ticker = nodeTicker[0].InnerText;
+                        stock.PriorClosePrice = Convert.ToDouble(row.Children[1].InnerText);
+                        stock.Ceiling = Convert.ToDouble(row.Children[2].InnerText);
+                        stock.Floor = Convert.ToDouble(row.Children[3].InnerText);
+
+                        stock.MainVolume = Convert.ToDouble(row.Children[21].InnerText);
+                        stock.OpenPrice = Convert.ToDouble(row.Children[22].InnerText);
+                        stock.ClosePrice = Convert.ToDouble(row.Children[11].InnerText);
+
+                        stock.ChangePrice = Convert.ToDouble(row.Children[13].InnerText);
+                        if (stock.PriorClosePrice != 0)
+                            stock.ChangePriceRatio = Math.Round(stock.ChangePrice / stock.PriorClosePrice, 1);
+
+                        stock.HighPrice = Convert.ToDouble(row.Children[23].InnerText);
+                        stock.LowPrice = Convert.ToDouble(row.Children[24].InnerText);
+                        stock.AveragePrice = (stock.HighPrice + stock.LowPrice) / 2;
+
+                        list.Add(stock);
+                    }
+                }
             }
 
+           
 
-            btnRun.Visible = true;
-            lblMessage.Text = "";
-            timer1.Stop();
+            
         }
 
         private void btnClose_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void timerHnx_Tick(object sender, EventArgs e)
+        {
+            List<StockPrice> list = new List<StockPrice>();
+            ParseData(list, webBrowserHnx);
+            if (list.Count > 0)
+            {
+                if (SaveData(list))
+                {                    
+                    lblMessage.Text = "Successful Hnx";
+                }
+                else
+                {
+                    lblMessage.Text = "Failed Hnx!";
+                }
+            }
+            else
+            {
+                lblMessage.Text = "No data or duplicated Hnx!";
+            }
+            //btnRun.Visible = true;            
+            timerHnx.Stop();
+        }
+
+        private void timerUpcom_Tick(object sender, EventArgs e)
+        {
+            List<StockPrice> list = new List<StockPrice>();
+            ParseData(list, webBrowserUpcom);
+            if (list.Count > 0)
+            {
+                if (SaveData(list))
+                {
+                    lblMessage.Text = "Successful Upcom";
+                }
+                else
+                {
+                    lblMessage.Text = "Failed Upcom!";
+                }
+            }
+            else
+            {
+                lblMessage.Text = "No data or duplicated Upcom!";
+            }
+            btnRun.Visible = true;            
+            timerUpcom.Stop();
+        }
+
+        private void webBrowserHnx_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+            timerHnx.Interval = 60000; // 10 seconds
+            timerHnx.Start();
+        }
+
+        private void webBrowserUpcom_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+            timerUpcom.Interval = 90000; // 10 seconds
+            timerUpcom.Start();
         }
     }
 }
