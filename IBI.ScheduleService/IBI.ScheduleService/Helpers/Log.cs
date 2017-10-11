@@ -20,7 +20,7 @@ namespace IBI.ScheduleService.Helpers
                 string NowShort = DateTime.Now.ToShortDateString().Replace("/", ".");
                 sb.AppendLine(Now);
                 sb.AppendLine("**************************");
-                sb.Append("Error: " + Module);
+                sb.Append("Log: " + Module);
                 sb.AppendLine();
                 sb.Append(log);
                 sb.AppendLine();
