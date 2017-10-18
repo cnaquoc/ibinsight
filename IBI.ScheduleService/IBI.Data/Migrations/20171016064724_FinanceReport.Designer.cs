@@ -8,9 +8,10 @@ using IBI.Data;
 namespace IBI.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171016064724_FinanceReport")]
+    partial class FinanceReport
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
@@ -161,7 +162,7 @@ namespace IBI.Data.Migrations
 
                     b.Property<double>("TraTruocChoNguoiBanNganHan");
 
-                    b.Property<double>("VonKinhDoanhOCacDonViTrucThuoc");
+                    b.Property<double>("VonKinhDoanhCuaCacDonViTrucThuoc");
 
                     b.Property<int>("Year");
 
@@ -209,9 +210,9 @@ namespace IBI.Data.Migrations
 
                     b.Property<double>("GiaoDichMuaBanLaiTraiPhieuChinhPhu");
 
-                    b.Property<double>("LnstChuaPhanPhoiKyNay");
+                    b.Property<double>("LNSTChuaPhanPhoiKyNay");
 
-                    b.Property<double>("LnstChuaPhanPhoiLuyKeDenCuoiKyTruoc");
+                    b.Property<double>("LNSTChuaPhanPhoiLuyKeDenCuoiKyTruoc");
 
                     b.Property<double>("LoiIchCoDongKhongKiemSoat");
 
@@ -229,11 +230,11 @@ namespace IBI.Data.Migrations
 
                     b.Property<double>("NguonKinhPhi");
 
-                    b.Property<double>("NguonKinhPhiDaHinhThanhTscd");
+                    b.Property<double>("NguonKinhPhiDaHinhThanhTSCD");
 
                     b.Property<double>("NguonKinhPhiVaQuyKhac");
 
-                    b.Property<double>("NguonVonDauTuXdcb");
+                    b.Property<double>("NguonVonDauTuXDCB");
 
                     b.Property<double>("NoDaiHan");
 
@@ -243,7 +244,7 @@ namespace IBI.Data.Migrations
 
                     b.Property<double>("PhaiTraDaiHanKhac");
 
-                    b.Property<double>("PhaiTraNganHanKhac");
+                    b.Property<double>("PhaiTraNganhanKhac");
 
                     b.Property<double>("PhaiTraNguoiBanDaiHan");
 
@@ -311,39 +312,37 @@ namespace IBI.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<double>("Aud");
-
                     b.Property<Guid>("CompanyId");
 
                     b.Property<DateTime?>("Created");
 
                     b.Property<string>("CreatedBy");
 
-                    b.Property<double>("DuToanChiHoatDong");
-
-                    b.Property<double>("Euro");
-
-                    b.Property<double>("Gbp");
+                    b.Property<double>("DuToanChiTietHoatDong");
 
                     b.Property<double>("HangHoaNhanBanHoNhanKyGui");
-
-                    b.Property<double>("Khac");
-
-                    b.Property<double>("Lak");
 
                     b.Property<DateTime?>("Modified");
 
                     b.Property<string>("ModifiedBy");
 
-                    b.Property<double>("NgoaiTeCacLoai");
+                    b.Property<double>("NgoaiTeCacLoaiAUD");
+
+                    b.Property<double>("NgoaiTeCacLoaiEURO");
+
+                    b.Property<double>("NgoaiTeCacLoaiGBP");
+
+                    b.Property<double>("NgoaiTeCacLoaiKhac");
+
+                    b.Property<double>("NgoaiTeCacLoaiLAK");
+
+                    b.Property<double>("NgoaiTeCacLoaiUSD");
 
                     b.Property<double>("NoKhoDoiDaXuLy");
 
                     b.Property<int>("QuarterType");
 
                     b.Property<double>("TaiSanThueNgoai");
-
-                    b.Property<double>("Usd");
 
                     b.Property<double>("VatTuHangHoaNhanGiuHoNhanGiaCong");
 
@@ -365,15 +364,15 @@ namespace IBI.Data.Migrations
 
                     b.Property<double>("ChiPhiKhac");
 
-                    b.Property<double>("ChiPhiLaiVay");
-
                     b.Property<double>("ChiPhiQuanLyDoanhNghiep");
 
                     b.Property<double>("ChiPhiTaiChinh");
 
-                    b.Property<double>("ChiPhiThueTndnHienHanh");
+                    b.Property<double>("ChiPhiTaiChinhLaiVay");
 
-                    b.Property<double>("ChiPhiThueTndnHoanLai");
+                    b.Property<double>("ChiPhiThueTNDNHienHanh");
+
+                    b.Property<double>("ChiPhiThueTNDNHoanLai");
 
                     b.Property<Guid>("CompanyId");
 
@@ -465,13 +464,13 @@ namespace IBI.Data.Migrations
 
                     b.Property<double>("TienChiDauTuGopVonVaoDonViKhac");
 
-                    b.Property<double>("TienChiDeMuaSamXayDungTscdVaCacTaiSanDaiHanKhac");
-
-                    b.Property<double>("TienChiKhacChoHoatDongDauTu");
+                    b.Property<double>("TienChiDeMuaSamXayDungTSCDVaCacTaiSanDaiHanKhac");
 
                     b.Property<double>("TienChiKhacChoHoatDongKinhDoanh");
 
                     b.Property<double>("TienChiKhacChoHoatDongTaiChinh");
+
+                    b.Property<double>("TienChiKhacTuHoatDongDauTu");
 
                     b.Property<double>("TienChiNopThueThuNhapDoanhNghiep");
 
@@ -503,7 +502,7 @@ namespace IBI.Data.Migrations
 
                     b.Property<double>("TienThuTuPhatHanhCoPhieuNhanVonGopCuaChuSoHuu");
 
-                    b.Property<double>("TienThuTuThanhLyNhuongBanTscdVaCacTaiSanDaiHanKhac");
+                    b.Property<double>("TienThuTuThanhLyNhuongBanTSCDVaCacTaiSanDaiHanKhac");
 
                     b.Property<double>("TienTraNoGocThueTaiChinh");
 
@@ -541,17 +540,19 @@ namespace IBI.Data.Migrations
 
                     b.Property<double>("DieuChinhChoCacKhoanKhac");
 
-                    b.Property<double>("KhauHaoTscdVaBdsdt");
+                    b.Property<double>("KhauHaoTSCDVaBDSDT");
 
-                    b.Property<double>("LaiLoChenhLechTyGiaHoiDoaiDoDanhGiaLai");
+                    b.Property<double>("LaiLoChenhLechTyGiaHoiDoai");
 
-                    b.Property<double>("LaiLoDoThanhLyTscd");
+                    b.Property<double>("LaiLoDoThanhLyTSCD");
 
                     b.Property<double>("LaiLoTuHoatDongDauTu");
 
                     b.Property<double>("LoiNhuanTruocThue");
 
                     b.Property<double>("LoiNhuanTuHoatDongKinhDoanhTruocThayDoiVonLuuDong");
+
+                    b.Property<double>("LuuChuyenTienTeTuHoatDongKinhDoanh");
 
                     b.Property<double>("LuuChuyenTienThuanTrongKy");
 
@@ -562,8 +563,6 @@ namespace IBI.Data.Migrations
                     b.Property<double>("LuuChuyenTienThuanTuHoatDongTaiChinh");
 
                     b.Property<double>("LuuChuyenTienTuHoatDongDauTu");
-
-                    b.Property<double>("LuuChuyenTienTuHoatDongKinhDoanh");
 
                     b.Property<double>("LuuChuyenTienTuHoatDongTaiChinh");
 
@@ -597,7 +596,7 @@ namespace IBI.Data.Migrations
 
                     b.Property<double>("TienChiDauTuGopVonVaoDonViKhac");
 
-                    b.Property<double>("TienChiDeMuaSamXayDungTscdVaCacTaiSanDaiHanKhac");
+                    b.Property<double>("TienChiDeMuaSamXayDungTSCDVaCacTaiSanDaiHanKhac");
 
                     b.Property<double>("TienChiKhacChoHoatDongDauTu");
 
@@ -627,7 +626,7 @@ namespace IBI.Data.Migrations
 
                     b.Property<double>("TienThuTuPhatHanhCoPhieuNhanVonGopCuaChuSoHuu");
 
-                    b.Property<double>("TienThuTuThanhLyNhuongBanTscdVaCacTaiSanDaiHanKhac");
+                    b.Property<double>("TienThuTuThanhLyNhuongBanTSCDVaCacTaiSanDaiHanKhac");
 
                     b.Property<double>("TienTraNoGocThueTaiChinh");
 

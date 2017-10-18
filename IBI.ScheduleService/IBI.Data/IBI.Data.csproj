@@ -76,10 +76,12 @@
       <HintPath>..\packages\Microsoft.Extensions.FileProviders.Abstractions.1.1.0\lib\netstandard1.0\Microsoft.Extensions.FileProviders.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.Logging, Version=1.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Logging.1.1.1\lib\netstandard1.1\Microsoft.Extensions.Logging.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Microsoft.Extensions.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=1.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.1.1.1\lib\netstandard1.1\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.Options, Version=1.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Options.1.1.1\lib\netstandard1.0\Microsoft.Extensions.Options.dll</HintPath>
@@ -174,7 +176,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationDbContext.cs" />
+    <Compile Include="Entities\BaseEntityFinance.cs" />
+    <Compile Include="Entities\DirectCashFlows.cs" />
+    <Compile Include="Entities\IndirectCashFlows.cs" />
+    <Compile Include="Entities\BusinessResults.cs" />
+    <Compile Include="Entities\BalanceExtras.cs" />
+    <Compile Include="Entities\BalanceCapitals.cs" />
     <Compile Include="Entities\BaseEntity.cs" />
+    <Compile Include="Entities\BalanceAssets.cs" />
     <Compile Include="Entities\IAuditable.cs" />
     <Compile Include="Entities\IEntity.cs" />
     <Compile Include="Entities\StockPrice.cs" />
@@ -187,9 +196,13 @@
     <Compile Include="IManagers\IStockPriceManager.cs" />
     <Compile Include="Managers\BaseManager.cs" />
     <Compile Include="Managers\StockPriceManager.cs" />
-    <Compile Include="Migrations\20170921043435_Init.cs" />
-    <Compile Include="Migrations\20170921043435_Init.designer.cs">
-      <DependentUpon>20170921043435_Init.cs</DependentUpon>
+    <Compile Include="Migrations\20171016064724_FinanceReport.cs" />
+    <Compile Include="Migrations\20171016064724_FinanceReport.designer.cs">
+      <DependentUpon>20171016064724_FinanceReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20171018080757_ModifyFinance.cs" />
+    <Compile Include="Migrations\20171018080757_ModifyFinance.designer.cs">
+      <DependentUpon>20171018080757_ModifyFinance.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\ApplicationDbContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

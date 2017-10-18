@@ -19,6 +19,12 @@ namespace IBI.Data
         }
 
         public DbSet<Entities.StockPrice> StockPrices { get; set; }
+        public DbSet<Entities.BalanceAssets> BalanceAssets { get; set; }
+        public DbSet<Entities.BalanceCapitals> BalanceCapitals { get; set; }
+        public DbSet<Entities.BalanceExtras> BalanceExtras { get; set; }
+        public DbSet<Entities.BusinessResults> BusinessResults { get; set; }
+        public DbSet<Entities.IndirectCashFlows> IndirectCashFlows { get; set; }
+        public DbSet<Entities.DirectCashFlows> DirectCashFlows { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -184,7 +184,6 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\Log.cs" />
     <Compile Include="Helpers\Utils.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -215,6 +214,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\IBI.Core\IBI.Core.csproj">
+      <Project>{bfba1e4f-4508-41d3-a037-655849cb9e83}</Project>
+      <Name>IBI.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\IBI.Data\IBI.Data.csproj">
       <Project>{5b24cd14-f1fb-4b6f-90ff-9a986b6da954}</Project>
       <Name>IBI.Data</Name>

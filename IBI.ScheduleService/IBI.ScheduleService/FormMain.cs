@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using IBI.Core;
 
 
 namespace IBI.ScheduleService
@@ -61,6 +61,7 @@ namespace IBI.ScheduleService
 
         private void btnRun_Click(object sender, EventArgs e)
         {
+            LogHelper.WriteLog("Start for three");
             RetryUpcomCount = 0;
             //string url =Utils.GetConfigValue("UrlHose");
 
