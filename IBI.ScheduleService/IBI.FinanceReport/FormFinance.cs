@@ -12,6 +12,8 @@ using System.Data.OleDb;
 using IBI.Core;
 using IBI.Data.Entities;
 using IBI.Data;
+using System.IO;
+
 
 namespace IBI.FinanceReport
 {
@@ -29,6 +31,13 @@ namespace IBI.FinanceReport
         {
             InitializeComponent();
             _context = context;
+
+
+            string autoImport = Configuration.GetConfigValue("AutoImport");
+            if (autoImport=="true")
+            {
+                AutoImport();
+            }
         }
 
         private void btnFile_Click(object sender, EventArgs e)
@@ -42,19 +51,48 @@ namespace IBI.FinanceReport
             
         }
 
+
+        private void AutoImport()
+        {
+            string folderImport = Configuration.GetConfigValue("ImportFolder");
+            if (Directory.Exists( folderImport))
+            {
+                var files = Directory.GetFiles(folderImport).Where(t=>t.Contains(".xls") || t.Contains(".xlsx")).ToList();
+                foreach (var fileName in files)
+                {
+                    ImportToDatabase(fileName);
+                }
+
+            }
+
+        }
+
         private void btnImport_Click(object sender, EventArgs e)
         {
-            var fileName = @"D:\Test\AAM_20170506.xls";
+            var fileName = txtFile.Text; //@"D:\Test\AAM_20170506.xls";
+
+            ImportToDatabase(fileName);
+            
+        }
+
+
+        private void ImportToDatabase(string fileName)
+        {
+            string extension = System.IO.Path.GetExtension(fileName);
+            if (extension.ToLower() != ".xls" && extension.ToLower() != ".xlsx")
+            {
+                return;
+            }
+
             DataSet ds = ReadExcelFile(fileName);
             bool invalidField = false;
             string companyId = Guid.NewGuid().ToString();
             string Zone = "";
-            if (ds !=null && ds.Tables.Count > 0)
+            if (ds != null && ds.Tables.Count > 0)
             {
                 DataTable dt = ds.Tables[0];
 
                 // get all columns name and data
-
                 Dictionary<string, int> dic = new Dictionary<string, int>();
 
                 bool isData = false;
@@ -65,12 +103,12 @@ namespace IBI.FinanceReport
                 {
                     string FieldName = dr[0].ToString();
                     string FieldNameTemp = StringHelpers.ConvertToUnSign(FieldName).Replace(" ", "").ToLower();
-                    string Code= dr[1].ToString();
+                    string Code = dr[1].ToString();
 
-                    if (FieldNameTemp == ZoneTaiSan && Code.ToLower().Trim() =="ms")
+                    if (FieldNameTemp == ZoneTaiSan && Code.ToLower().Trim() == "ms")
                     {
                         Zone = ZoneTaiSan;
-                        isData = true;                        
+                        isData = true;
                     }
 
                     if (isData)
@@ -82,7 +120,7 @@ namespace IBI.FinanceReport
                             int quarter = 0;
                             if (GetYearQuarter(dr[i].ToString(), ref year, ref quarter))
                             {
-                                dic.Add(quarter + "/" + year  , i);
+                                dic.Add(quarter + "/" + year, i);
                             }
                         }
 
@@ -92,10 +130,8 @@ namespace IBI.FinanceReport
                     rowStart++;
                 }
 
-                // process data
-
-                
-                if (dic.Count>0)
+                // process data                
+                if (dic.Count > 0)
                 {
                     List<BalanceAssets> listInsertBalanceAssets = new List<BalanceAssets>();
                     List<BalanceCapitals> listInsertBalanceCapitals = new List<BalanceCapitals>();
@@ -175,7 +211,7 @@ namespace IBI.FinanceReport
                                             case ZoneLuuChuyenTienTeTrucTiep:
                                                 AssignValue(directCashFlows, fieldName, value);
                                                 break;
-                                        }                                        
+                                        }
 
                                     }
                                     else
@@ -200,12 +236,14 @@ namespace IBI.FinanceReport
                         listInsertBusinessResults.Add(businessResults);
                         listInsertIndirectCashFlows.Add(indirectCashFlows);
                         listInsertDirectCashFlows.Add(directCashFlows);
-                        
-                        
+
+
                     }
                     // Save data
                     if (!invalidField)
                     {
+
+
                         _context.BalanceAssets.AddRange(listInsertBalanceAssets);
                         _context.BalanceCapitals.AddRange(listInsertBalanceCapitals);
                         _context.BalanceExtras.AddRange(listInsertBalanceExtras);
@@ -214,14 +252,35 @@ namespace IBI.FinanceReport
                         _context.DirectCashFlows.AddRange(listInsertDirectCashFlows);
                         _context.SaveChanges();
                     }
-                    
-                }
 
-                
+                }
 
             }
         }
 
+
+        private bool CheckFormularBalanceAssets(List<BalanceAssets> listInsertBalanceAssets)
+        {
+            bool result = true;
+
+            
+            foreach (var item in listInsertBalanceAssets)
+            {
+                //A. TÀI SẢN NGẮN HẠN (100=110+120+130+140+150)
+                if (item.TaiSanNganHan != item.TienVaCacKhoanTuongDuongTien + item.DauTuTaiChinhNganHan + item.CacKhoanPhaiThuNganHan + item.HangTonKho + item.TaiSanNganHanKhac  )
+                {
+                    return false;
+                }
+
+                if (item.TienVaCacKhoanTuongDuongTien != item.Tien + item.CacKhoanTuongDuongTien)
+                {
+                    return false;
+                }
+            }
+
+
+            return result;
+        }
         private static string ReplaceSpeicalFieldName(string fieldName, string code)
         {
             //BalanceAssets
@@ -262,8 +321,6 @@ namespace IBI.FinanceReport
             {
                 fieldName = nameof(IndirectCashFlows.TienChiTraVonGopChoCacChuSoHuu);
             }
-
-
 
             return fieldName;
         }
