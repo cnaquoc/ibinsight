@@ -11,9 +11,10 @@ namespace IBI.Data
 {
     public static class IBIRegisterManagers
     {
-        public static void UseRainWater(this IServiceCollection services)
+        public static void UseIBIDatabase(this IServiceCollection services)
         {
             services.AddScoped<IStockPriceManager, StockPriceManager>();
+            services.AddTransient<ICompanyManager, CompanyManager>();
         }
     }
 }

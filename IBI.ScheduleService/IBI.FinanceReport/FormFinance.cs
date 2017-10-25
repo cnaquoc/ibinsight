@@ -13,13 +13,15 @@ using IBI.Core;
 using IBI.Data.Entities;
 using IBI.Data;
 using System.IO;
-
+using IBI.Data.IManagers;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace IBI.FinanceReport
 {
     public partial class FormFinance : Form
     {
         private readonly ApplicationDbContext _context;
+        private readonly ICompanyManager _companyManager = SYS.ServiceProvider.GetService<ICompanyManager>();
         
         private const string ZoneTaiSan = "taisan";
         private const string ZoneNguonVon = "nguonvon";
@@ -27,32 +29,51 @@ namespace IBI.FinanceReport
         private const string ZoneKetQuaKinhDoanh = "ketquakinhdoanh";
         private const string ZoneLuuChuyenTienTeGianTiep = "luuchuyentientegiantiep";
         private const string ZoneLuuChuyenTienTeTrucTiep = "luuchuyentientetructiep";
+
         public FormFinance(ApplicationDbContext context)
         {
             InitializeComponent();
             _context = context;
+            
+        }
 
-
+        private async void FormFinance_Load(object sender, EventArgs e)
+        {
             string autoImport = Configuration.GetConfigValue("AutoImport");
-            if (autoImport=="true")
+            if (autoImport == "true")
             {
-                AutoImport();
+                await AutoImport();
             }
+        }
+
+        private void AppendTextWithColor(RichTextBox box, string text, Color color)
+        {
+            box.SelectionStart = box.TextLength;
+            box.SelectionLength = 0;
+
+            box.SelectionColor = color;
+            box.AppendText(text);
+            box.SelectionColor = box.ForeColor;
         }
 
         private void btnFile_Click(object sender, EventArgs e)
         {
-            OpenFileDialog fileDialog = new OpenFileDialog();
-            fileDialog.Filter = "Excel file |*.xls";
-            if (fileDialog.ShowDialog() ==  DialogResult.OK)
+            //OpenFileDialog fileDialog = new OpenFileDialog();
+            //fileDialog.Filter = "Excel file |*.xls";
+            //if (fileDialog.ShowDialog() ==  DialogResult.OK)
+            //{
+            //    txtFile.Text = fileDialog.FileName;
+            //}
+
+            FolderBrowserDialog folderDialog = new FolderBrowserDialog();
+            if (folderDialog.ShowDialog() == DialogResult.OK)
             {
-                txtFile.Text = fileDialog.FileName;
+                txtFile.Text = folderDialog.SelectedPath;
             }
-            
         }
 
 
-        private void AutoImport()
+        private async Task AutoImport()
         {
             string folderImport = Configuration.GetConfigValue("ImportFolder");
             if (Directory.Exists( folderImport))
@@ -60,33 +81,72 @@ namespace IBI.FinanceReport
                 var files = Directory.GetFiles(folderImport).Where(t=>t.Contains(".xls") || t.Contains(".xlsx")).ToList();
                 foreach (var fileName in files)
                 {
-                    ImportToDatabase(fileName);
+                    await ImportToDatabase(fileName);
                 }
 
             }
 
         }
 
-        private void btnImport_Click(object sender, EventArgs e)
+        private async void btnImport_Click(object sender, EventArgs e)
         {
-            var fileName = txtFile.Text; //@"D:\Test\AAM_20170506.xls";
-
-            ImportToDatabase(fileName);
+            //var fileName = txtFile.Text; //@"D:\Test\AAM_20170506.xls";
             
+            //ImportToDatabase(fileName);
+            rtbLogging.Text = "";
+
+            string folderImport = txtFile.Text;
+            if (Directory.Exists(folderImport))
+            {
+                var files = Directory.GetFiles(folderImport).Where(t => t.Contains(".xls") || t.Contains(".xlsx")).ToList();
+                rtbLogging.Text = "Total files: " + files.Count + Environment.NewLine;
+                lblCount.Text = "0/" + files.Count;
+
+                int countFail = 0, countSuccess = 0;
+                foreach (var filePath in files)
+                {
+                    var fileNameOnly = Path.GetFileName(filePath);
+                    var stateText = fileNameOnly + "in processing ";
+
+                    bool isSuccess;
+                    string msg = Environment.NewLine;
+                    try
+                    {
+                        isSuccess = await ImportToDatabase(filePath);
+                    }
+                    catch (Exception ex)
+                    {
+                        isSuccess = false;
+                        msg = ex.Message + msg;
+                    }
+
+                    
+                    AppendTextWithColor(rtbLogging, fileNameOnly + (isSuccess ? " Success " : " Fail ") + msg, isSuccess ? Color.Green : Color.Red);
+
+                    countSuccess += isSuccess ? 1 : 0;
+                    countFail += !isSuccess ? 1 : 0;
+
+                    lblCount.Text = (countSuccess + countFail) + "/" + files.Count + " - Fail: " + countFail;
+                }
+            }
         }
 
-
-        private void ImportToDatabase(string fileName)
+        private async Task<bool> ImportToDatabase(string fileName)
         {
             string extension = System.IO.Path.GetExtension(fileName);
             if (extension.ToLower() != ".xls" && extension.ToLower() != ".xlsx")
             {
-                return;
+                return false;
             }
+
+            var ticker = Path.GetFileNameWithoutExtension(fileName).Substring(0, 3);
 
             DataSet ds = ReadExcelFile(fileName);
             bool invalidField = false;
-            string companyId = Guid.NewGuid().ToString();
+
+            Guid? companyId = await  _companyManager.GetIdByTickerAsync(ticker);
+            if (companyId.IsEmpty()) return false;
+            
             string Zone = "";
             if (ds != null && ds.Tables.Count > 0)
             {
@@ -101,9 +161,17 @@ namespace IBI.FinanceReport
 
                 foreach (DataRow dr in dt.Rows)
                 {
+                    int plus = 0;
                     string FieldName = dr[0].ToString();
+                    if (FieldName.IsEmpty())
+                    {
+                        FieldName = dr[1].ToString();
+                        plus = 1;
+                    }
+                    if (FieldName.IsEmpty()) continue;
+
                     string FieldNameTemp = StringHelpers.ConvertToUnSign(FieldName).Replace(" ", "").ToLower();
-                    string Code = dr[1].ToString();
+                    string Code = dr[1+ plus].ToString();
 
                     if (FieldNameTemp == ZoneTaiSan && Code.ToLower().Trim() == "ms")
                     {
@@ -113,7 +181,6 @@ namespace IBI.FinanceReport
 
                     if (isData)
                     {
-
                         for (int i = 2; i < dt.Columns.Count; i++)
                         {
                             int year = 0;
@@ -145,6 +212,7 @@ namespace IBI.FinanceReport
                         int year = Convert.ToInt32(item.Key.Substring(item.Key.Length - 4));
                         int quarter = Convert.ToInt32(item.Key.Substring(0, item.Key.Length - 5));
                         int columnIndex = item.Value;
+
                         //Add asset table 
                         BalanceAssets balanceAssets = new BalanceAssets();
                         InitBaseObject(balanceAssets, companyId, quarter, year);
@@ -229,7 +297,6 @@ namespace IBI.FinanceReport
                         }
 
 
-
                         listInsertBalanceAssets.Add(balanceAssets);
                         listInsertBalanceCapitals.Add(balanceCapitals);
                         listInsertBalanceExtras.Add(balanceExtras);
@@ -239,6 +306,7 @@ namespace IBI.FinanceReport
 
 
                     }
+                    
                     // Save data
                     if (!invalidField)
                     {
@@ -250,12 +318,13 @@ namespace IBI.FinanceReport
                         _context.BusinessResults.AddRange(listInsertBusinessResults);
                         _context.IndirectCashFlows.AddRange(listInsertIndirectCashFlows);
                         _context.DirectCashFlows.AddRange(listInsertDirectCashFlows);
-                        _context.SaveChanges();
+
+                        await _context.SaveChangesAsync();
                     }
-
                 }
-
             }
+
+            return true;
         }
 
 
@@ -360,17 +429,18 @@ namespace IBI.FinanceReport
 
         
 
-        private void InitBaseObject(BaseEntityFinance obj, string companyId, int quarter, int year)
+        private void InitBaseObject(BaseEntityFinance obj, Guid? companyId, int quarter, int year)
         {
+            if (companyId == null || companyId == Guid.Empty)
+                companyId = Guid.NewGuid();
+
             obj.Id = Guid.NewGuid();
-            obj.CompanyId = new Guid(companyId);
-            obj.Created = DateTime.Now;
+            obj.CompanyId = companyId.Value;
+            obj.Created = DateTime.UtcNow;
             obj.QuarterType = quarter;
             obj.Year = year;
         }
-
         
-
 
         private void AssignValue(Object obj, string name , string value)
         {
@@ -384,8 +454,6 @@ namespace IBI.FinanceReport
             }
             
         }
-
-       
         
 
         private static string ConvertFieldName(string fieldName)
