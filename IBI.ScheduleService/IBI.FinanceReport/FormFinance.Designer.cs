@@ -33,6 +33,7 @@
             this.btnImport = new System.Windows.Forms.Button();
             this.rtbLogging = new System.Windows.Forms.RichTextBox();
             this.lblCount = new System.Windows.Forms.Label();
+            this.btnStop = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtFile
@@ -85,11 +86,24 @@
             this.lblCount.Size = new System.Drawing.Size(0, 13);
             this.lblCount.TabIndex = 4;
             // 
+            // btnStop
+            // 
+            this.btnStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnStop.Location = new System.Drawing.Point(793, 34);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(63, 23);
+            this.btnStop.TabIndex = 5;
+            this.btnStop.Text = "Stop";
+            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Visible = false;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
+            // 
             // FormFinance
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(868, 475);
+            this.Controls.Add(this.btnStop);
             this.Controls.Add(this.lblCount);
             this.Controls.Add(this.rtbLogging);
             this.Controls.Add(this.btnImport);
@@ -110,5 +124,6 @@
         private System.Windows.Forms.Button btnImport;
         private System.Windows.Forms.RichTextBox rtbLogging;
         private System.Windows.Forms.Label lblCount;
+        private System.Windows.Forms.Button btnStop;
     }
 }

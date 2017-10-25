@@ -29,6 +29,8 @@ namespace IBI.FinanceReport
         private const string ZoneLuuChuyenTienTeGianTiep = "luuchuyentientegiantiep";
         private const string ZoneLuuChuyenTienTeTrucTiep = "luuchuyentientetructiep";
 
+        private bool IsStop { get; set; }
+
         public FormFinance(ApplicationDbContext context)
         {
             InitializeComponent();
@@ -90,8 +92,13 @@ namespace IBI.FinanceReport
         private async void btnImport_Click(object sender, EventArgs e)
         {
             //var fileName = txtFile.Text; //@"D:\Test\AAM_20170506.xls";
-            
+
             //ImportToDatabase(fileName);
+            IsStop = false;
+            btnImport.Enabled = false;
+            btnStop.Visible = true;
+            
+
             rtbLogging.Text = "";
 
             string folderImport = txtFile.Text;
@@ -104,6 +111,8 @@ namespace IBI.FinanceReport
                 int countFail = 0, countSuccess = 0;
                 foreach (var filePath in files)
                 {
+                    if (IsStop) break;
+
                     var fileNameOnly = Path.GetFileName(filePath);
                     var stateText = "Processing " + fileNameOnly;
                     rtbLogging.AppendText(stateText);
@@ -131,6 +140,9 @@ namespace IBI.FinanceReport
                     lblCount.Text = (countSuccess + countFail) + "/" + files.Count + " - Fail: " + countFail;
                 }
             }
+
+            btnStop.Visible = false;
+            btnImport.Enabled = true;
         }
 
         private async Task<bool> ImportToDatabase(string fileName)
@@ -324,6 +336,10 @@ namespace IBI.FinanceReport
                         await _context.SaveChangesAsync();
                     }
                 }
+            }
+            else
+            {
+                throw new Exception("Cannot read excel file!");
             }
 
             return true;
@@ -867,5 +883,9 @@ namespace IBI.FinanceReport
             return null;
         }
 
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+            IsStop = true;
+        }
     }
 }
