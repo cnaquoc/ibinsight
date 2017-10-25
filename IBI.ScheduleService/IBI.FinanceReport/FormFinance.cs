@@ -172,40 +172,44 @@ namespace IBI.FinanceReport
                 bool isData = false;
                 //find header row
                 int rowStart = 0;
+                int colPlus = 0;
 
                 foreach (DataRow dr in dt.Rows)
                 {
-                    int plus = 0;
+                    colPlus = 0;
+
                     string FieldName = dr[0].ToString();
                     if (FieldName.IsEmpty())
                     {
                         FieldName = dr[1].ToString();
-                        plus = 1;
-                    }
-                    if (FieldName.IsEmpty()) continue;
-
-                    string FieldNameTemp = StringHelpers.ConvertToUnSign(FieldName).Replace(" ", "").ToLower();
-                    string Code = dr[1+ plus].ToString();
-
-                    if (FieldNameTemp == ZoneTaiSan && Code.ToLower().Trim() == "ms")
-                    {
-                        Zone = ZoneTaiSan;
-                        isData = true;
+                        colPlus = 1;
                     }
 
-                    if (isData)
+                    if (!FieldName.IsEmpty())
                     {
-                        for (int i = 2; i < dt.Columns.Count; i++)
+                        string FieldNameTemp = StringHelpers.ConvertToUnSign(FieldName).Replace(" ", "").ToLower();
+                        string Code = dr[1 + colPlus].ToString();
+
+                        if (FieldNameTemp == ZoneTaiSan && Code.ToLower().Trim() == "ms")
                         {
-                            int year = 0;
-                            int quarter = 0;
-                            if (GetYearQuarter(dr[i].ToString(), ref year, ref quarter))
-                            {
-                                dic.Add(quarter + "/" + year, i);
-                            }
+                            Zone = ZoneTaiSan;
+                            isData = true;
                         }
 
-                        break;
+                        if (isData)
+                        {
+                            for (int i = 2; i < dt.Columns.Count; i++)
+                            {
+                                int year = 0;
+                                int quarter = 0;
+                                if (GetYearQuarter(dr[i].ToString(), ref year, ref quarter))
+                                {
+                                    dic.Add(quarter + "/" + year, i);
+                                }
+                            }
+
+                            break;
+                        }
                     }
 
                     rowStart++;
@@ -251,16 +255,15 @@ namespace IBI.FinanceReport
                         DirectCashFlows directCashFlows = new DirectCashFlows();
                         InitBaseObject(directCashFlows, companyId, quarter, year);
 
-
                         int rowCount = 0;
                         foreach (DataRow dr in dt.Rows)
                         {
-                            string fieldName = dr[0].ToString();
+                            string fieldName = dr[0 + colPlus].ToString();
                             string FieldNameTemp = StringHelpers.ConvertToUnSign(fieldName).Replace(" ", "").ToLower();
 
                             GetZone(FieldNameTemp, ref Zone);
 
-                            string code = dr[1].ToString();
+                            string code = dr[1 + colPlus].ToString();
                             string value = dr[columnIndex].ToString();
                             if (rowCount > rowStart)
                             {
@@ -324,16 +327,17 @@ namespace IBI.FinanceReport
                     // Save data
                     if (!invalidField)
                     {
+                        using (ApplicationDbContext context = SYS.ServiceProvider.GetService<ApplicationDbContext>())
+                        {
+                            context.BalanceAssets.AddRange(listInsertBalanceAssets);
+                            context.BalanceCapitals.AddRange(listInsertBalanceCapitals);
+                            context.BalanceExtras.AddRange(listInsertBalanceExtras);
+                            context.BusinessResults.AddRange(listInsertBusinessResults);
+                            context.IndirectCashFlows.AddRange(listInsertIndirectCashFlows);
+                            context.DirectCashFlows.AddRange(listInsertDirectCashFlows);
 
-
-                        _context.BalanceAssets.AddRange(listInsertBalanceAssets);
-                        _context.BalanceCapitals.AddRange(listInsertBalanceCapitals);
-                        _context.BalanceExtras.AddRange(listInsertBalanceExtras);
-                        _context.BusinessResults.AddRange(listInsertBusinessResults);
-                        _context.IndirectCashFlows.AddRange(listInsertIndirectCashFlows);
-                        _context.DirectCashFlows.AddRange(listInsertDirectCashFlows);
-
-                        await _context.SaveChangesAsync();
+                            await context.SaveChangesAsync();
+                        }
                     }
                 }
             }

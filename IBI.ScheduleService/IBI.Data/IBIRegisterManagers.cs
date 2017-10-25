@@ -13,7 +13,7 @@ namespace IBI.Data
     {
         public static void UseIBIDatabase(this IServiceCollection services)
         {
-            services.AddScoped<IStockPriceManager, StockPriceManager>();
+            services.AddTransient<IStockPriceManager, StockPriceManager>();
             services.AddTransient<ICompanyManager, CompanyManager>();
         }
     }
