@@ -66,28 +66,29 @@ namespace IBI.ScheduleService
             //string url =Utils.GetConfigValue("UrlHose");
 
             RunHose();
-            RunHnx();
-            RunUpcom();
+            //RunHnx();
+            //RunUpcom();
 
-            lblMessage.Text = "Processing...";
             btnRun.Visible = false;
-
         }
 
         private void RunHose()
         {
+            lblMessage.Text = "Processing Hose...";
             string urlHose = Utils.GetConfigValue("UrlHose").Replace("*", "&");
             webBrowserHose.Navigate(urlHose);
         }
 
         private void RunHnx()
         {
+            lblMessage.Text = "Processing Hnx...";
             string urlHnx = Utils.GetConfigValue("UrlHnx").Replace("*", "&");
             webBrowserHnx.Navigate(urlHnx);
         }
 
         private void RunUpcom()
         {
+            lblMessage.Text = "Processing Upcom...";
             string urlUpcom = Utils.GetConfigValue("UrlUpcom").Replace("*", "&");
             webBrowserUpcom.Navigate(urlUpcom);
         }
@@ -145,7 +146,7 @@ namespace IBI.ScheduleService
 
         private void webBrowserHose_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         { 
-            timerHose.Interval = 10000; // 10 seconds
+            timerHose.Interval = 20000; // 10 seconds
             timerHose.Start();
             LogHelper.WriteLog("Start Hose");
         }
@@ -312,37 +313,48 @@ namespace IBI.ScheduleService
         
 
         #endregion
+
         private void timerHose_Tick(object sender, EventArgs e)
         {
-            List<StockPrice> listInsert = new List<StockPrice>();
-            List<StockPrice> listUpdate = new List<StockPrice>();
-            ParseData(listInsert, listUpdate, webBrowserHose);
-
-            bool isSuccessUpdate = false;
-            bool isSuccessInsert = false;
-            isSuccessInsert = SaveData(listInsert);
-            isSuccessUpdate = UpdateData(listUpdate);
-
-            if (listInsert.Count > 0 || listUpdate.Count > 0)
+            try
             {
-                if (isSuccessUpdate && isSuccessInsert)
+                List<StockPrice> listInsert = new List<StockPrice>();
+                List<StockPrice> listUpdate = new List<StockPrice>();
+                ParseData(listInsert, listUpdate, webBrowserHose);
+
+                bool isSuccessUpdate = false;
+                bool isSuccessInsert = false;
+                isSuccessInsert = SaveData(listInsert);
+                isSuccessUpdate = UpdateData(listUpdate);
+
+                if (listInsert.Count > 0 || listUpdate.Count > 0)
                 {
-                    lblMessage.Text = "Successful Hose";
-                    LogHelper.WriteLog("Successful Hose");
+                    if (isSuccessUpdate && isSuccessInsert)
+                    {
+                        lblMessage.Text = "Successful Hose";
+                        LogHelper.WriteLog("Successful Hose");
+                    }
+                    else
+                    {
+                        lblMessage.Text = "Failed Hose!";
+                        LogHelper.WriteLog("Failed Hose!");
+                    }
                 }
                 else
                 {
-                    lblMessage.Text = "Failed Hose!";
-                    LogHelper.WriteLog("Failed Hose!");
+                    lblMessage.Text = "No data Hose!";
+                    LogHelper.WriteLog("No data Hose!");
                 }
+                timerHose.Stop();
+                LogHelper.WriteLog("Stop Hose!");
             }
-            else
+            catch
             {
-                lblMessage.Text = "No data Hose!";
-                LogHelper.WriteLog("No data Hose!");
+                RetryHose();
+                return;
             }
-            timerHose.Stop();
-            LogHelper.WriteLog("Stop Hose!");
+
+            RunHnx();
         }
 
         private void ParseData(List<StockPrice> listInsert, List<StockPrice> listUpdate, WebBrowser wb)
@@ -415,11 +427,6 @@ namespace IBI.ScheduleService
             {
                 LogHelper.WriteLog(ex.Message);
             }
-            
-
-           
-
-            
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -429,74 +436,90 @@ namespace IBI.ScheduleService
 
         private void timerHnx_Tick(object sender, EventArgs e)
         {
-            List<StockPrice> listInsert = new List<StockPrice>();
-            List<StockPrice> listUpdate = new List<StockPrice>();
-            ParseData(listInsert, listUpdate, webBrowserHnx);
-
-            bool isSuccessUpdate = false;
-            bool isSuccessInsert = false;
-            isSuccessInsert = SaveData(listInsert);
-            isSuccessUpdate = UpdateData(listUpdate);
-
-            if (listInsert.Count > 0 || listUpdate.Count>0)
+            try
             {
-                if (isSuccessUpdate && isSuccessInsert)
+                List<StockPrice> listInsert = new List<StockPrice>();
+                List<StockPrice> listUpdate = new List<StockPrice>();
+                ParseData(listInsert, listUpdate, webBrowserHnx);
+
+                bool isSuccessUpdate = false;
+                bool isSuccessInsert = false;
+                isSuccessInsert = SaveData(listInsert);
+                isSuccessUpdate = UpdateData(listUpdate);
+
+                if (listInsert.Count > 0 || listUpdate.Count > 0)
                 {
-                    lblMessage.Text = "Successful Hnx";
-                    LogHelper.WriteLog("Successful Hnx");
+                    if (isSuccessUpdate && isSuccessInsert)
+                    {
+                        lblMessage.Text = "Successful Hnx";
+                        LogHelper.WriteLog("Successful Hnx");
+                    }
+                    else
+                    {
+                        lblMessage.Text = "Failed Hnx!";
+                        LogHelper.WriteLog("Successful Hnx");
+                    }
                 }
                 else
                 {
-                    lblMessage.Text = "Failed Hnx!";
-                    LogHelper.WriteLog("Successful Hnx");
+                    lblMessage.Text = "No data Hnx!";
+                    LogHelper.WriteLog("No data Hnx!");
                 }
+                timerHnx.Stop();
+                LogHelper.WriteLog("Stop Hnx!");
             }
-            else
+            catch
             {
-                lblMessage.Text = "No data Hnx!";
-                LogHelper.WriteLog("No data Hnx!");
-            }                      
-            timerHnx.Stop();
-            LogHelper.WriteLog("Stop Hnx!");
+                RetryHnx();
+                return;
+            }
+
+            RunUpcom();
         }
 
         private void timerUpcom_Tick(object sender, EventArgs e)
         {
-            List<StockPrice> listInsert = new List<StockPrice>();
-            List<StockPrice> listUpdate = new List<StockPrice>();
-            ParseData(listInsert, listUpdate, webBrowserUpcom);
-
-            bool isSuccessUpdate = false;
-            bool isSuccessInsert = false;
-            isSuccessInsert = SaveData(listInsert);
-            isSuccessUpdate = UpdateData(listUpdate);
-
-            if (listInsert.Count > 0 || listUpdate.Count > 0)
+            try
             {
-                if (isSuccessUpdate && isSuccessInsert)
+                List<StockPrice> listInsert = new List<StockPrice>();
+                List<StockPrice> listUpdate = new List<StockPrice>();
+                ParseData(listInsert, listUpdate, webBrowserUpcom);
+
+                bool isSuccessUpdate = false;
+                bool isSuccessInsert = false;
+                isSuccessInsert = SaveData(listInsert);
+                isSuccessUpdate = UpdateData(listUpdate);
+
+                if (listInsert.Count > 0 || listUpdate.Count > 0)
                 {
-                    lblMessage.Text = "Successful Upcom";
-                    LogHelper.WriteLog("Successful Upcom");
+                    if (isSuccessUpdate && isSuccessInsert)
+                    {
+                        lblMessage.Text = "Successful Upcom";
+                        LogHelper.WriteLog("Successful Upcom");
+                    }
+                    else
+                    {
+                        lblMessage.Text = "Failed Upcom!";
+                        LogHelper.WriteLog("Failed Upcom!");
+                    }
                 }
                 else
                 {
-                    lblMessage.Text = "Failed Upcom!";
-                    LogHelper.WriteLog("Failed Upcom!");
+                    RetryUpcom();
+
+                    lblMessage.Text = "No data Upcom!";
+                    LogHelper.WriteLog("No data Upcom!");
                 }
+
+                btnRun.Visible = true;
+                timerUpcom.Stop();
+                LogHelper.WriteLog("Stop Upcom!");
             }
-            else
-            {
+            catch {
                 RetryUpcom();
-
-                lblMessage.Text = "No data Upcom!";
-                LogHelper.WriteLog("No data Upcom!");
+                return;
             }
-            
-            btnRun.Visible = true;            
-            timerUpcom.Stop();
-            LogHelper.WriteLog("Stop Upcom!");
         }
-
 
         private void RetryUpcom()
         {
@@ -524,6 +547,7 @@ namespace IBI.ScheduleService
             }
             RetryHnxCount++;
         }
+
         private void webBrowserHnx_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
             timerHnx.Interval = 20000; // 10 seconds
@@ -533,7 +557,7 @@ namespace IBI.ScheduleService
 
         private void webBrowserUpcom_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
-            timerUpcom.Interval = 30000; // 10 seconds
+            timerUpcom.Interval = 20000; // 10 seconds
             timerUpcom.Start();
             LogHelper.WriteLog("Start Upcom");
         }

@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Excel;
 using System.Data.OleDb;
 using IBI.Core;
 using IBI.Data.Entities;
@@ -106,7 +105,8 @@ namespace IBI.FinanceReport
                 foreach (var filePath in files)
                 {
                     var fileNameOnly = Path.GetFileName(filePath);
-                    var stateText = fileNameOnly + "in processing ";
+                    var stateText = "Processing " + fileNameOnly;
+                    rtbLogging.AppendText(stateText);
 
                     bool isSuccess;
                     string msg = Environment.NewLine;
@@ -120,7 +120,9 @@ namespace IBI.FinanceReport
                         msg = ex.Message + msg;
                     }
 
-                    
+                    rtbLogging.SelectionStart = rtbLogging.TextLength - stateText.Length;
+                    rtbLogging.SelectionLength = stateText.Length;
+                    rtbLogging.SelectedText = "";
                     AppendTextWithColor(rtbLogging, fileNameOnly + (isSuccess ? " Success " : " Fail ") + msg, isSuccess ? Color.Green : Color.Red);
 
                     countSuccess += isSuccess ? 1 : 0;
