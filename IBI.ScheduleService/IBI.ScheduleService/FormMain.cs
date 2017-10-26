@@ -316,6 +316,7 @@ namespace IBI.ScheduleService
 
         private void timerHose_Tick(object sender, EventArgs e)
         {
+            bool isComplete = false;
             try
             {
                 List<StockPrice> listInsert = new List<StockPrice>();
@@ -333,6 +334,7 @@ namespace IBI.ScheduleService
                     {
                         lblMessage.Text = "Successful Hose";
                         LogHelper.WriteLog("Successful Hose");
+                        
                     }
                     else
                     {
@@ -347,14 +349,27 @@ namespace IBI.ScheduleService
                 }
                 timerHose.Stop();
                 LogHelper.WriteLog("Stop Hose!");
+                isComplete = true;
             }
             catch
             {
                 RetryHose();
-                return;
+                if (RetryHoseCount == 10)
+                {
+                    isComplete = true;
+                    RetryHoseCount = 0;
+                }
+                else
+                {
+                    return;
+                }
+                
             }
-
-            RunHnx();
+            if (isComplete)
+            {
+                RunHnx();
+            }
+            
         }
 
         private void ParseData(List<StockPrice> listInsert, List<StockPrice> listUpdate, WebBrowser wb)
@@ -436,6 +451,7 @@ namespace IBI.ScheduleService
 
         private void timerHnx_Tick(object sender, EventArgs e)
         {
+            bool isComplete = false;
             try
             {
                 List<StockPrice> listInsert = new List<StockPrice>();
@@ -452,7 +468,7 @@ namespace IBI.ScheduleService
                     if (isSuccessUpdate && isSuccessInsert)
                     {
                         lblMessage.Text = "Successful Hnx";
-                        LogHelper.WriteLog("Successful Hnx");
+                        LogHelper.WriteLog("Successful Hnx");                        
                     }
                     else
                     {
@@ -467,18 +483,32 @@ namespace IBI.ScheduleService
                 }
                 timerHnx.Stop();
                 LogHelper.WriteLog("Stop Hnx!");
+                isComplete = true;
             }
             catch
             {
                 RetryHnx();
-                return;
+                if (RetryHnxCount== 10)
+                {
+                    isComplete = true;
+                    RetryHnxCount = 0;
+                }
+                else
+                {
+                    return;
+                }
+                
             }
-
-            RunUpcom();
+            if (isComplete)
+            {
+                RunUpcom();
+            }
+            
         }
 
         private void timerUpcom_Tick(object sender, EventArgs e)
         {
+            bool isComplete = false;
             try
             {
                 List<StockPrice> listInsert = new List<StockPrice>();
@@ -496,6 +526,8 @@ namespace IBI.ScheduleService
                     {
                         lblMessage.Text = "Successful Upcom";
                         LogHelper.WriteLog("Successful Upcom");
+
+                        Application.Exit();
                     }
                     else
                     {
@@ -514,11 +546,27 @@ namespace IBI.ScheduleService
                 btnRun.Visible = true;
                 timerUpcom.Stop();
                 LogHelper.WriteLog("Stop Upcom!");
+                isComplete = true;
             }
             catch {
                 RetryUpcom();
+                if (RetryUpcomCount == 10)
+                {
+                    isComplete = true;
+                    RetryUpcomCount = 0;
+                }
+                else
+                {
+                    return;
+                }
                 return;
             }
+
+            if (isComplete)
+            {
+                Application.Exit();
+            }
+
         }
 
         private void RetryUpcom()
