@@ -155,6 +155,66 @@ namespace IBI.Core
         }
 
 
+        public static bool IsDouble(string input)
+        {
+            double result = 0;
+            try
+            {                
+                double.TryParse(input, out result);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public static bool IsDateTime(string input, string format = "MM/dd/yyyy")
+        {
+            try
+            {
+                DateTime result;
+                DateTime.TryParseExact(input, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out result);
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+
+            return true;
+        }
+        public static DateTime StringToDateTime(this string input, string format = "MM/dd/yyyy")
+        {
+            try
+            {
+                DateTime result;
+                DateTime.TryParseExact(input, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out result);
+                return result;
+            }
+            catch (Exception)
+            {
+
+            }
+
+            return DateTime.MinValue;
+        }
+
+        public static double StringToDoubleExact(this string input)
+        {
+            double result = 0;
+            try
+            {               
+                double.TryParse(input, out result);
+            }
+            catch (Exception)
+            {
+
+            }
+            return result;
+        }
+
+
         public static string Reverse(string input)
         {
             string result = input;
