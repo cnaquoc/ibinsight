@@ -8151,7 +8151,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Windows 10 TIMT\\.nuget\\packages\\": {}
+    "C:\\Users\\Administrator.GE6DOKQOI986PZC\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
@@ -8159,14 +8159,14 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\Windows 10 TIMT\\Source\\Repos\\ibinsight\\IBI.Web.API\\IBI.Web.API\\IBI.Data.API\\IBI.Data.API.csproj",
+      "projectUniqueName": "D:\\GitHub\\IBI.Web.API\\IBI.Web.API\\IBI.Data.API\\IBI.Data.API.csproj",
       "projectName": "IBI.Data.API",
-      "projectPath": "C:\\Users\\Windows 10 TIMT\\Source\\Repos\\ibinsight\\IBI.Web.API\\IBI.Web.API\\IBI.Data.API\\IBI.Data.API.csproj",
-      "packagesPath": "C:\\Users\\Windows 10 TIMT\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Windows 10 TIMT\\Source\\Repos\\ibinsight\\IBI.Web.API\\IBI.Web.API\\IBI.Data.API\\obj\\",
+      "projectPath": "D:\\GitHub\\IBI.Web.API\\IBI.Web.API\\IBI.Data.API\\IBI.Data.API.csproj",
+      "packagesPath": "C:\\Users\\Administrator.GE6DOKQOI986PZC\\.nuget\\packages\\",
+      "outputPath": "D:\\GitHub\\IBI.Web.API\\IBI.Web.API\\IBI.Data.API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Windows 10 TIMT\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Administrator.GE6DOKQOI986PZC\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -8174,12 +8174,18 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "netcoreapp1.1": {
           "projectReferences": {}
         }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
       }
     },
     "frameworks": {
