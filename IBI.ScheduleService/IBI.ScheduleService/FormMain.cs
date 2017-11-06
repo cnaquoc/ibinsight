@@ -41,6 +41,7 @@ namespace IBI.ScheduleService
         private int RetryUpcomCount = 0;
         private int RetryHoseCount = 0;
         private int RetryHnxCount = 0;
+
         public frmMain(ApplicationDbContext context)
         {
             _context = context;            
@@ -57,7 +58,6 @@ namespace IBI.ScheduleService
                 btnRun_Click(this, new EventArgs());
             }
         }
-
 
         private void btnRun_Click(object sender, EventArgs e)
         {
@@ -359,12 +359,13 @@ namespace IBI.ScheduleService
 
         private void ParseData(List<StockPrice> listInsert, List<StockPrice> listUpdate, WebBrowser wb)
         {
-
             try
             {
                 DateTime currentDate = DateTime.Now.Date;
 
-                var oldList = _context.StockPrices.Where(t => t.TransactionDate.Date.Equals(currentDate)).ToList();
+                var oldList = _context.StockPrices
+                    .Where(t => t.TransactionDate.Date.Equals(currentDate))
+                    .Select(t=> new { Id = t.Id, Ticker = t.Ticker }).ToList();
 
                 var tablerows = wb.Document.GetElementById("tbLP");
 
@@ -376,23 +377,25 @@ namespace IBI.ScheduleService
 
                     foreach (HtmlElement row in rows)
                     {
-                        bool isAddnew = true;
                         var nodeTicker = row.Children[0].GetElementsByTagName("span");
                         string ticker = nodeTicker[0].InnerText;
-                        StockPrice stock = oldList.Where(t => t.Ticker == ticker).FirstOrDefault();
+                        StockPrice stock = oldList
+                            .Where(t => t.Ticker == ticker)
+                            .Select(t=> new StockPrice { Id= t.Id, Ticker = t.Ticker } )
+                            .FirstOrDefault();
+
+                        bool isAddnew;
                         if (stock == null)
                         {
                             isAddnew = true;
                             stock = new StockPrice();
                             stock.Id = Guid.NewGuid();
                             stock.TransactionDate = DateTime.Now;
-                            stock.Created = DateTime.Now;
                             stock.Ticker = ticker;
                         }
                         else
                         {
                             isAddnew = false;
-                            stock.Modified = DateTime.Now;
                         }
                         stock.PriorClosePrice = Convert.ToDouble(row.Children[1].InnerText);
                         stock.Ceiling = Convert.ToDouble(row.Children[2].InnerText);
@@ -417,9 +420,15 @@ namespace IBI.ScheduleService
                         }
 
                         if (isAddnew)
+                        {
+                            stock.Created = stock.Modified = DateTime.Now;
                             listInsert.Add(stock);
+                        }
                         else
+                        {
+                            stock.Modified = DateTime.Now;
                             listUpdate.Add(stock);
+                        }
                     }
                 }
             }
@@ -519,6 +528,8 @@ namespace IBI.ScheduleService
                 RetryUpcom();
                 return;
             }
+
+            Application.Exit();
         }
 
         private void RetryUpcom()
@@ -526,6 +537,10 @@ namespace IBI.ScheduleService
             if (RetryUpcomCount <=10)
             {
                 RunUpcom();
+            }
+            else
+            {
+                Application.Exit();
             }
             RetryUpcomCount++;
         }
@@ -536,6 +551,10 @@ namespace IBI.ScheduleService
             {
                 RunHose();
             }
+            else
+            {
+                Application.Exit();
+            }
             RetryHoseCount++;
         }
 
@@ -544,6 +563,10 @@ namespace IBI.ScheduleService
             if (RetryHnxCount <= 10)
             {
                 RunHnx();
+            }
+            else
+            {
+                Application.Exit();
             }
             RetryHnxCount++;
         }
