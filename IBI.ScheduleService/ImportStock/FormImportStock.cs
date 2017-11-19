@@ -27,7 +27,7 @@ namespace ImportStock
         {
             InitializeComponent();
             _context = context;
-            txtFile.Text = "D:\\ImportStock";
+            txtFile.Text = "D:\\Parer\\Stock";
         }
 
         private void btnFile_Click(object sender, EventArgs e)
